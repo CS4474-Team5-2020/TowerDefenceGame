@@ -58,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -118,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finishZone: {fileID: 0}
   health: 5
+  value: 1
 --- !u!54 &4663915732067841957
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,19 +8,26 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
+
+    private MoneySystem money;
     [SerializeField] private int health;
-    
+    [SerializeField] private int value;   //How much money player gets when killing this enemy
 
     // Start is called before the first frame update
     void Start()
     {
-
+        try {
+            this.money = GameObject.FindObjectOfType<MoneySystem>();
+        }
+        catch(Exception e) {
+            Debug.LogException(e);
+        } 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void TakeDamage(int damage)
@@ -31,6 +39,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
+        money.setMoneyBalance(value);
         gameObject.SetActive(false);
     }
 
