@@ -34,7 +34,7 @@ public class MoneySystem : MonoBehaviour
     public void setMoneyBalance(int value) {
         //Set money balance and counter values
         this.moneyBalance += value;
-        this.moneyCounter += 1;
+        this.moneyCounter += value;
 
         //Set UI Text Canvas Objects with money balance and counter values
         this.moneyText.text = '$' + this.moneyBalance.ToString();
