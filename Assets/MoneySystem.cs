@@ -16,7 +16,7 @@ public class MoneySystem : MonoBehaviour
     {
         //Load in the saved money balance just before the current game session begins
         this.moneyBalance = PlayerPrefs.GetInt("moneyBalance");
-        this.moneyText.text = '$' + this.moneyBalance.ToString();
+        this.moneyText.text = this.moneyBalance.ToString();
     }
 
     // Update is called once per frame
@@ -44,8 +44,8 @@ public class MoneySystem : MonoBehaviour
         this.moneyCounter += value;
 
         //Set UI Text Canvas Objects with money balance and counter values
-        this.moneyText.text = '$' + this.moneyBalance.ToString();
-        this.moneyCounterText.text = "$+" + this.moneyCounter.ToString();
+        this.moneyText.text = this.moneyBalance.ToString();
+        this.moneyCounterText.text = "+$" + this.moneyCounter.ToString();
 
         //Save the current balance into Playerprefs so it can be saved for later game sessions
         this.saveMoneyBalance();
