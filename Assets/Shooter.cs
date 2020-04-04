@@ -35,7 +35,7 @@ public class Shooter : MonoBehaviour
 
     private void UnsetTarget(GameObject targetObject)
     {
-        if (target.gameObject != targetObject)
+        if (target == null || target.gameObject != targetObject)
             return;
 
         target = null;
