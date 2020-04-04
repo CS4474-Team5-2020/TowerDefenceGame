@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
     [SerializeField] private int health;
+    public delegate void OnDeath(GameObject gameObject);
+    public OnDeath onDeath;
     public float agentSpeed = 3.5f;
     
 
@@ -34,6 +36,7 @@ public class EnemyAI : MonoBehaviour
     {
         StopCoroutine("FreezeEffect");
         gameObject.SetActive(false);
+        onDeath?.Invoke(gameObject);
     }
 
     public void ApplyFreezeEffect() {
