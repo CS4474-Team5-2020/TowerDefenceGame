@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 1753041523}
   - component: {fileID: 1753041522}
   m_Layer: 5
-  m_Name: balance
+  m_Name: MoneyBalance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -847,8 +847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff03f7e2d9d03da4586d6f090419c95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyText: {fileID: 1753041522}
-  moneyCounterText: {fileID: 0}
+  moneyBalanceText: {fileID: 1753041522}
+  moneyValueText: {fileID: 0}
 --- !u!4 &1867591257
 Transform:
   m_ObjectHideFlags: 0
