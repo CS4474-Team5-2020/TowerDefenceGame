@@ -23,14 +23,12 @@ public class Spawner : MonoBehaviour
 
     IEnumerator Spawn()
     {
-        while (true)
-        {
-            GameObject enemyObject = pool.GetGameObject();
-            enemyObject.transform.position = transform.position;
-            EnemyAI enemy = enemyObject.GetComponent<EnemyAI>();
-            enemy.onDeath += pool.ReturnGameObject;
-            enemy.SetDestination(finishZone.transform.position);
+        //while (true)
+        //{
+        //    GameObject enemyObject = pool.GetGameObject();
+        //    enemyObject.transform.position = transform.position;
+        //    enemyObject.GetComponent<EnemyAI>().SetDestination(finishZone.transform.position);
             yield return new WaitForSeconds(timePerSpawn);
-        }
+        //}
     }
 }

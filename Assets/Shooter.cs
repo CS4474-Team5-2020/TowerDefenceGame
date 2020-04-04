@@ -11,72 +11,73 @@ public class Shooter : MonoBehaviour
     public GameObject rotatable;
 
     public float timePerShot;
+    public float attackTimer;
     public int shotDamage;
     public float shotSpeed;
+    private bool canAttack;
+
+    private Queue<Transform> enemies = new Queue<Transform>();
 
     // Start is called before the first frame update
     void Start()
     {
+        canAttack = true;
         detector.onDetect += SetTarget;
         detector.unDetect += UnsetTarget;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Attack();
+    }
+
+    private void Attack()
+    {
+        if(!canAttack)
+        {
+            attackTimer += Time.deltaTime;
+            if(attackTimer >= timePerShot)
+            {
+                canAttack = true;
+                attackTimer = 0;
+            }
+        }
+
+        if(target == null && enemies.Count > 0){
+            target = enemies.Dequeue();
+        }else if(target != null && !target.GetComponent<EnemyAI>().IsAlive()){
+            if(enemies.Count > 0)
+                target = enemies.Dequeue();
+        }else if(target != null){
+            if(canAttack){
+                Shoot();
+                canAttack = false;
+            }
+        }
     }
 
     private void SetTarget(GameObject targetObject)
     {
-        if (target == null)
-            StartCoroutine(Shoot(targetObject.transform));
+        enemies.Enqueue(targetObject.transform);
     }
 
     private void UnsetTarget(GameObject targetObject)
     {
-        if (target == null)
-            return;
-
-        if (target.gameObject != targetObject)
-            return;
-
         target = null;
     }
 
-    IEnumerator Shoot(Transform newTarget)
+    private void Shoot()
     {
-        target = newTarget;
-        StartCoroutine(Aim());
-        EnemyAI enemy = target.GetComponent<EnemyAI>();
-        while (target != null)
-        {
-            if (!enemy.IsAlive())
-            {
-                target = GetNextTarget();
-                if (target == null)
-                    break;
-            }
-            GameObject bullet = bulletPool.GetGameObject();
-            bullet.GetComponent<Bullet>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
-            yield return new WaitForSeconds(timePerShot);
+        //Todo is there some fancy OO way of making this cleaner?
+        GameObject projectile = bulletPool.GetGameObject();
+        Debug.Log(bulletPool.name);
+        if (bulletPool.name == "BulletPool") {
+            projectile.GetComponent<Bullet>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
+        } else if (bulletPool.name == "MissilePool") {
+            projectile.GetComponent<Missile>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
         }
 
-    }
-
-    IEnumerator Aim()
-    {
-        while (target != null)
-        {
-            Vector3 displacement = target.position - transform.position;
-            rotatable.transform.rotation = Quaternion.LookRotation(new Vector3(displacement.x, 0, displacement.z));
-            yield return null;
-        }
-    }
-    
-
-    private Transform GetNextTarget()
-    {
-        return null;
     }
 }
