@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int health;
 
     private MoneyManager money;
-    private int value = 1;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
+    private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
     private bool isBalanceIncreased = false;    //Balanced increased?
 
     // Start is called before the first frame update
