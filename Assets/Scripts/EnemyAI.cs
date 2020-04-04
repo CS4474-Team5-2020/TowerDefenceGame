@@ -8,12 +8,13 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
     [SerializeField] private int health;
+    public float agentSpeed = 3.5f;
     
 
     // Start is called before the first frame update
     void Start()
     {
-
+        this.GetComponent<NavMeshAgent>().speed = agentSpeed;
     }
 
     // Update is called once per frame
@@ -31,7 +32,28 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
+        StopCoroutine("FreezeEffect");
         gameObject.SetActive(false);
+    }
+
+    public void ApplyFreezeEffect() {
+        StartCoroutine("FreezeEffect",0.5f);
+    }
+
+    IEnumerator FreezeEffect(float freezeTime)
+    {
+        float duration = freezeTime;
+        float totalTime = 0;
+        while (totalTime <= duration)
+        {
+            if(this != null)
+                this.GetComponent<NavMeshAgent>().speed = 1f;
+            totalTime += Time.deltaTime;
+            var integer = (int)totalTime; /* choose how to quantize this */
+                                          /* convert integer to string and assign to text */
+            yield return null;
+        }
+        this.GetComponent<NavMeshAgent>().speed = agentSpeed;
     }
 
     public bool IsAlive()
