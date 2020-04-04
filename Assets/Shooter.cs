@@ -17,7 +17,7 @@ public class Shooter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Comment these out to see player's health indicator decrease
+        //For now comment these out to see player's health indicator decrease
         detector.onDetect += SetTarget;
         detector.unDetect += UnsetTarget;
     }
