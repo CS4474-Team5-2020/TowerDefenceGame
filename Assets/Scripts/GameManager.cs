@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.IO;
+using System;
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -22,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject BottomEndZone;
     public GameObject LeftEndZone;
     public GameObject RightEndZone;
+    private Queue<Wave> WaveData = new Queue<Wave>();
 
     private void Awake()
     {
@@ -34,6 +38,8 @@ public class GameManager : Singleton<GameManager>
         WaveTime = Countdown;
         NextButtonTxt = GameObject.Find("NextWaveBtn").GetComponentInChildren<Button>().GetComponentInChildren<Text>();
         NextButtonTxt.text = "Next Wave +" + WaveTime;
+        LoadWaveData();
+        StartWave();
         //Update remaining time every second
         InvokeRepeating("UpdateTime", 1f, 1f);
     }
@@ -58,9 +64,14 @@ public class GameManager : Singleton<GameManager>
     }
     public void StartWave()
     {
-        StartCoroutine(SpawnWave());
+        if(WaveData.Count > 0)
+        {
+            var currentWave = WaveData.Dequeue();
+            StartCoroutine(SpawnWave(currentWave));
+        }
+        
     }
-    private IEnumerator SpawnWave()
+    private IEnumerator SpawnWave(Wave wave)
     {
 
         //TODO: Have txt file with the composition of each wave (enemy type(s) and number of enemies)
@@ -71,18 +82,41 @@ public class GameManager : Singleton<GameManager>
         WaveTime = Countdown;
         NextButtonTxt.text = "Next Wave +" + WaveTime;
         //TODO: Increase gold based on how much time left in current wave
-        SpawnEnemy("","top");
-        SpawnEnemy("", "bottom");
-        SpawnEnemy("", "right");
-        SpawnEnemy("", "left");
-
+        string minionType = wave.MinionType;
+        //Spawn required number of enemies at each spawn point
+        while(wave.TotalMinionCount > 0)
+        {
+            if(wave.TopSpawnCount > 0)
+            {
+                SpawnEnemy(minionType, "top");
+                wave.TopSpawnCount--;
+                wave.TotalMinionCount--;
+            }
+            if (wave.BottomSpawnCount > 0)
+            {
+                SpawnEnemy(minionType, "bottom");
+                wave.BottomSpawnCount--;
+                wave.TotalMinionCount--;
+            }
+            if (wave.LeftSpawnCount > 0)
+            {
+                SpawnEnemy(minionType, "left");
+                wave.LeftSpawnCount--;
+                wave.TotalMinionCount--;
+            }
+            if (wave.RightSpawnCount > 0)
+            {
+                SpawnEnemy(minionType, "right");
+                wave.RightSpawnCount--;
+                wave.TotalMinionCount--;
+            }
+        }
         yield return new WaitForSeconds(2.5f);
     }
 
     private void SpawnEnemy(string enemyType, string position)
     {
-        string type = "Enemy";
-        GameObject enemyObject = Pool.GetObject(type);
+        GameObject enemyObject = Pool.GetObject(enemyType);
         GameObject spawnPos;
         GameObject endPos;
         switch (position)
@@ -112,4 +146,38 @@ public class GameManager : Singleton<GameManager>
         enemyObject.transform.position = spawnPos.transform.position;
         enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
     }
+    //CSV Format: Wave #,Minion Type, # of minions, top spawn count, bottom spawn count, left spawn count, right spawn count
+    //Loads Wave Data into Queue
+    private void LoadWaveData()
+    {
+        string[] lines = File.ReadAllLines(@"Assets\WaveComposition.csv");
+        foreach(var line in lines)
+        {
+            string[] lineContents = line.Split(',');
+            var newWave = new Wave()
+            {
+                WaveNumber = Int32.Parse(lineContents[0]),
+                MinionType = lineContents[1],
+                TotalMinionCount = Int32.Parse(lineContents[2]),
+                TopSpawnCount = Int32.Parse(lineContents[3]),
+                BottomSpawnCount = Int32.Parse(lineContents[4]),
+                LeftSpawnCount = Int32.Parse(lineContents[5]),
+                RightSpawnCount = Int32.Parse(lineContents[6])
+            };
+            WaveData.Enqueue(newWave);
+        }
+        
+    }
+}
+ class Wave
+{
+    public int WaveNumber { get; set; }
+    public string MinionType { get; set; }
+    public int TotalMinionCount { get; set; }
+    public int TopSpawnCount { get; set; }
+    public int BottomSpawnCount { get; set; }
+    public int LeftSpawnCount { get; set; }
+    public int RightSpawnCount { get; set; }
+
+
 }
