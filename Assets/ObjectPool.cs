@@ -14,7 +14,8 @@ public class ObjectPool : MonoBehaviour
     public GameObject pooledObject;     //Object to pool and instantiate
     public int initialPoolSize;         //Number of pooledObjects that will be initialized into the pool
     private Stack<GameObject> pool;     //Stack that represents the object pool
-
+    [SerializeField]
+    private GameObject[] objectPrefabs;
 
     //Awake initializes the Object Pool by adding in an initial buffer of pooled objects
     void Awake()
@@ -49,6 +50,20 @@ public class ObjectPool : MonoBehaviour
         {
             return Instantiate(pooledObject);
         }
+    }
+    //Get a game object of the desired type from the object pool
+    public GameObject GetObject(string type)
+    {
+        for(int i = 0; i < objectPrefabs.Length; i++)
+        {
+            if(objectPrefabs[i].name == type)
+            {
+                GameObject gameObject = Instantiate(objectPrefabs[i]);
+                gameObject.name = type;
+                return gameObject;
+            }
+        }
+        return null;
     }
 
     /* ReturnGameObject
