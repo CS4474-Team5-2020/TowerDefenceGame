@@ -70,9 +70,14 @@ public class Shooter : MonoBehaviour
 
     private void Shoot()
     {
-
-         GameObject bullet = bulletPool.GetGameObject();
-         bullet.GetComponent<Bullet>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
+        //Todo is there some fancy OO way of making this cleaner?
+        GameObject projectile = bulletPool.GetGameObject();
+        Debug.Log(bulletPool.name);
+        if (bulletPool.name == "BulletPool") {
+            projectile.GetComponent<Bullet>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
+        } else if (bulletPool.name == "MissilePool") {
+            projectile.GetComponent<Missile>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
+        }
 
     }
 }

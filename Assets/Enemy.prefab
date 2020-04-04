@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4663915732067841884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -92,7 +91,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4663915732067841884}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -118,7 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finishZone: {fileID: 0}
-  health: 40
+  health: 50
+  agentSpeed: 3.5
 --- !u!54 &4663915732067841957
 Rigidbody:
   m_ObjectHideFlags: 0
