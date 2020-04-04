@@ -35,6 +35,9 @@ public class Shooter : MonoBehaviour
 
     private void UnsetTarget(GameObject targetObject)
     {
+        if (target == null)
+            return;
+
         if (target.gameObject != targetObject)
             return;
 
@@ -43,8 +46,8 @@ public class Shooter : MonoBehaviour
 
     IEnumerator Shoot(Transform newTarget)
     {
-        StartCoroutine(Aim());
         target = newTarget;
+        StartCoroutine(Aim());
         EnemyAI enemy = target.GetComponent<EnemyAI>();
         while (target != null)
         {

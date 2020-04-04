@@ -27,7 +27,9 @@ public class Spawner : MonoBehaviour
         {
             GameObject enemyObject = pool.GetGameObject();
             enemyObject.transform.position = transform.position;
-            enemyObject.GetComponent<EnemyAI>().SetDestination(finishZone.transform.position);
+            EnemyAI enemy = enemyObject.GetComponent<EnemyAI>();
+            enemy.onDeath += pool.ReturnGameObject;
+            enemy.SetDestination(finishZone.transform.position);
             yield return new WaitForSeconds(timePerSpawn);
         }
     }

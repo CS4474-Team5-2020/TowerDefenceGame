@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
     [SerializeField] private int health;
+    public delegate void OnDeath(GameObject gameObject);
+    public OnDeath onDeath;
     
 
     // Start is called before the first frame update
@@ -32,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
+        onDeath?.Invoke(gameObject);
     }
 
     public bool IsAlive()
