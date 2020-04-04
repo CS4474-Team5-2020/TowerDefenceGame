@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour
 
     private MoneySystem money;
     [SerializeField] private int health;
-    private int value = 1;   //Equivalent to how much money player gets when killing this enemy - might want to set this in inspector instead?
+    private int value = 2;   //Equivalent to how much money player gets when killing this enemy - might want to set this in inspector instead?
     private bool isBalanceIncreased = false;    //Balanced increased?
 
     // Start is called before the first frame update

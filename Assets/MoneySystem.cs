@@ -7,16 +7,25 @@ using UnityEngine.UI;
 public class MoneySystem : MonoBehaviour
 {
     private int moneyBalance;
-    private int moneyCounter = 0;  //Amount of money gained in current game session
-    public Text moneyText;
-    public Text moneyCounterText;
+    private int moneyValue = 0;  //Amount of money gained per kill
+    public Text moneyBalanceText;
+    public Text moneyValueText;
+
+    private EasingManager ease;
 
     // Start is called before the first frame update
     void Start()
     {
         //Load in the saved money balance just before the current game session begins
         this.moneyBalance = PlayerPrefs.GetInt("moneyBalance");
-        this.moneyText.text = this.moneyBalance.ToString();
+        this.moneyBalanceText.text = this.moneyBalance.ToString();
+
+        try {
+            this.ease = GameObject.FindObjectOfType<EasingManager>();
+        }
+        catch(Exception e) {
+            Debug.LogException(e);
+        } 
     }
 
     // Update is called once per frame
@@ -34,18 +43,19 @@ public class MoneySystem : MonoBehaviour
         return this.moneyBalance;
     }
 
-    public int getMoneyCounter() {
-        return this.moneyCounter;
+    public int getMoneyValue() {
+        return this.moneyValue;
     }
 
     public void setMoneyBalance(int value) {
         //Set money balance and counter values
         this.moneyBalance += value;
-        this.moneyCounter += value;
+        this.moneyValue = value;
+        this.ease.easeCoin();
 
         //Set UI Text Canvas Objects with money balance and counter values
-        this.moneyText.text = this.moneyBalance.ToString();
-        this.moneyCounterText.text = "+$" + this.moneyCounter.ToString();
+        this.moneyBalanceText.text = this.moneyBalance.ToString();
+        this.moneyValueText.text = this.moneyValue.ToString();
 
         //Save the current balance into Playerprefs so it can be saved for later game sessions
         this.saveMoneyBalance();
