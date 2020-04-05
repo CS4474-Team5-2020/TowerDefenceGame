@@ -10,14 +10,15 @@ public class GameManager : Singleton<GameManager>
     public TowerBtn ClickedBtn { get; private set; }
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
-    //TODO: Update number next to "Next Wave" button with time remaining to indicate how much gold they will get for pressing it
 
-    //Constant for the default next wave score bonus/remaining wave time
-    private const int Countdown = 2;
+    //Constant for the default next wave starting score bonus/remaining wave time
+    private const int Countdown = 10;
     //Remaining time left in wave
     public int WaveTime { get; set; }
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
+
+    //References to Starting and End zones
     public GameObject TopStartZone;
     public GameObject BottomStartZone;
     public GameObject LeftStartZone;
@@ -26,6 +27,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject BottomEndZone;
     public GameObject LeftEndZone;
     public GameObject RightEndZone;
+
+    //Queue of current Waves
     private Queue<Wave> WaveData = new Queue<Wave>();
 
     private void Awake()
@@ -72,18 +75,15 @@ public class GameManager : Singleton<GameManager>
         }
         
     }
+
     private IEnumerator SpawnWave(Wave wave)
     {
-
-        //TODO: Have txt file with the composition of each wave (enemy type(s) and number of enemies)
-        //TODO: Get current wave number and spawn corresponding enemies for wave
-        //TODO: Spawn enemies in certain sections of map
-
         //Reset Next Wave Text
         WaveTime = Countdown;
         NextButtonTxt.text = "Next Wave +" + WaveTime;
         //TODO: Increase gold based on how much time left in current wave
         string minionType = wave.MinionType;
+
         //Spawn required number of enemies at each spawn point
         while(wave.TotalMinionCount > 0)
         {
@@ -118,7 +118,6 @@ public class GameManager : Singleton<GameManager>
     public void SpawnEnemy(string enemyType, string position, InheritedBehaviour parentBehaviour = null)
     {
         GameObject enemyObject = Pool.GetObject(enemyType);
-        string type = "Enemy";
         string orientation, endZone;
         GameObject spawnPos;
         GameObject endPos;
@@ -155,6 +154,7 @@ public class GameManager : Singleton<GameManager>
                 endZone = "";
                 break;
         }
+        //Initialize minion behaviour from parent (Group minion behaviour inherited by Groupling)
         if(parentBehaviour != null)
         {
             enemyObject.transform.position = parentBehaviour.SpawnPoint;
@@ -162,6 +162,7 @@ public class GameManager : Singleton<GameManager>
             enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(parentBehaviour.Orientation);
             enemyObject.GetComponent<EnemyAI>().SetEndZone(parentBehaviour.EndZone);
         }
+        //Initialize minion behaviour when spawned at spawnpoint
         else
         {
             enemyObject.transform.position = spawnPos.transform.position;

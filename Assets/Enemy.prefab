@@ -587,6 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finishZone: {fileID: 0}
   health: 50
+  minionType: Normal
   agentSpeed: 3.5
   healthBar: {fileID: 143255116499145206}
 --- !u!54 &4663915732067841957
