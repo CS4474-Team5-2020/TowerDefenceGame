@@ -8,8 +8,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
-    [SerializeField] private int health = 2;
-
+    private int health = 50;  //Might want to add this back to inspector
 
     private MoneyManager money;
     private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
@@ -23,6 +22,7 @@ public class EnemyAI : MonoBehaviour
     private bool isHealthDecreased = false;  //Health was already decreased? 
 
     private string attackOrientation;
+    private string endZone;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +36,6 @@ public class EnemyAI : MonoBehaviour
             Debug.LogException(e);
         } 
 
-        Debug.Log(this.transform.position.ToString());
-        Debug.Log(this.GetDestination().ToString());
-        Debug.Log("break");
-
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
 
     }
@@ -49,14 +45,14 @@ public class EnemyAI : MonoBehaviour
     {
         //If enemy made it across to the finish zone, then decrease the player health
         if (this.IsEnemyAcross()){
-            this.playerHealth.DecreasePlayerHealth(this.health);
+            this.playerHealth.DecreasePlayerHealth(this.health, this.endZone);
         }
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health < 0)
+        if (health <= 0)
             Die();
     }
 
@@ -106,7 +102,7 @@ public class EnemyAI : MonoBehaviour
         if (this.attackOrientation == "horizontal") {
             closeness = this.transform.position.x - this.GetDestination().x;
         }
-        else if (this.attackOrientation == "horizontal") {
+        else if (this.attackOrientation == "vertical") {
              closeness = this.transform.position.z - this.GetDestination().z;
         }
         else {
@@ -124,8 +120,11 @@ public class EnemyAI : MonoBehaviour
         this.attackOrientation = orientation;
     }
 
-    public void SetDestination(Vector3 destination)
-    {
+    public void SetEndZone(string endZone) {
+        this.endZone = endZone;
+    }
+
+    public void SetDestination(Vector3 destination) {
         this.GetComponent<NavMeshAgent>().destination = destination;
     }
 
