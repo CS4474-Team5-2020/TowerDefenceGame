@@ -7,12 +7,13 @@ using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
+    public TowerBtn ClickedBtn { get; private set; }
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
     //TODO: Update number next to "Next Wave" button with time remaining to indicate how much gold they will get for pressing it
 
     //Constant for the default next wave score bonus/remaining wave time
-    private const int Countdown = 50;
+    private const int Countdown = 2;
     //Remaining time left in wave
     public int WaveTime { get; set; }
     //Next Wave Text object to reference
@@ -117,6 +118,8 @@ public class GameManager : Singleton<GameManager>
     private void SpawnEnemy(string enemyType, string position)
     {
         GameObject enemyObject = Pool.GetObject(enemyType);
+        string type = "Enemy";
+        string orientation, endZone;
         GameObject spawnPos;
         GameObject endPos;
         switch (position)
@@ -124,27 +127,47 @@ public class GameManager : Singleton<GameManager>
             case "top":
                 spawnPos = TopStartZone;
                 endPos = TopEndZone;
+                orientation = "vertical";
+                endZone = "bottom";
                 break;
             case "bottom":
                 spawnPos = BottomStartZone;
                 endPos = BottomEndZone;
+                orientation = "vertical";
+                endZone = "top";
                 break;
             case "right":
                 spawnPos = RightStartZone;
                 endPos = RightEndZone;
+                orientation = "horizontal";
+                endZone = "left";
                 break;
             case "left":
                 spawnPos = LeftStartZone;
                 endPos = LeftEndZone;
+                orientation = "horizontal";
+                endZone = "right";
                 break;
             default:
                 spawnPos = null;
                 endPos = null;
+                orientation = "";
+                endZone = "";
                 break;
         }
 
         enemyObject.transform.position = spawnPos.transform.position;
         enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
+        enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
+        enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
+    }
+    public void PickTower(TowerBtn towerbtn)
+    {
+        this.ClickedBtn = towerbtn;
+    }
+    public void BuyTower()
+    {
+        this.ClickedBtn = null;
     }
     //CSV Format: Wave #,Minion Type, # of minions, top spawn count, bottom spawn count, left spawn count, right spawn count
     //Loads Wave Data into Queue

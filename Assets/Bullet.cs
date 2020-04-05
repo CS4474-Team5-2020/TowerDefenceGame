@@ -45,6 +45,7 @@ public class Bullet : MonoBehaviour
 
     public void Initialize(Vector3 position, EnemyAI target, int damage, float speed)
     {
+        transform.position = position;
         this.target = target;
         this.damage = damage;
         this.speed = speed;
