@@ -48,6 +48,11 @@ public class MoneyManager : MonoBehaviour
         return this.moneyValue;
     }
 
+    public void decreaseMoneyBalance(int value)
+    {
+        this.moneyBalance -= value;
+    }
+
     public void SetMoneyBalance(int value) {
         //Set money balance and counter values
         this.moneyBalance += value;
