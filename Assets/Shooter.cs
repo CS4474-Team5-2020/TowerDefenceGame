@@ -18,8 +18,8 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         //For now comment these out to see player's health indicator decrease
-        detector.onDetect += SetTarget;
-        detector.unDetect += UnsetTarget;
+        // detector.onDetect += SetTarget;
+        // detector.unDetect += UnsetTarget;
     }
 
     // Update is called once per frame
