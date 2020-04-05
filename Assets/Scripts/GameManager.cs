@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    public TowerBtn ClickedBtn { get; private set; }
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
     //TODO: Update number next to "Next Wave" button with time remaining to indicate how much gold they will get for pressing it
@@ -93,25 +94,25 @@ public class GameManager : Singleton<GameManager>
                 spawnPos = TopStartZone;
                 endPos = TopEndZone;
                 orientation = "vertical";
-                endZone = "top";
+                endZone = "bottom";
                 break;
             case "bottom":
                 spawnPos = BottomStartZone;
                 endPos = BottomEndZone;
                 orientation = "vertical";
-                endZone = "bottom";
+                endZone = "top";
                 break;
             case "right":
                 spawnPos = RightStartZone;
                 endPos = RightEndZone;
                 orientation = "horizontal";
-                endZone = "right";
+                endZone = "left";
                 break;
             case "left":
                 spawnPos = LeftStartZone;
                 endPos = LeftEndZone;
                 orientation = "horizontal";
-                endZone = "left";
+                endZone = "right";
                 break;
             default:
                 spawnPos = null;
@@ -125,5 +126,13 @@ public class GameManager : Singleton<GameManager>
         enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
         enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
         enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
+    }
+    public void PickTower(TowerBtn towerbtn)
+    {
+        this.ClickedBtn = towerbtn;
+    }
+    public void BuyTower()
+    {
+        this.ClickedBtn = null;
     }
 }
