@@ -17,6 +17,9 @@ public class EnemyAI : MonoBehaviour
     public delegate void OnDeath(GameObject gameObject);
     public OnDeath onDeath;
     public float agentSpeed = 3.5f;
+
+    //will move the slider on the healthbar
+    public HealthBar healthBar;
     
     private HealthManager playerHealth;
     private bool isHealthDecreased = false;  //Health was already decreased? 
@@ -38,6 +41,8 @@ public class EnemyAI : MonoBehaviour
 
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
 
+        healthBar.SetMaxHealth(health);
+
     }
 
     // Update is called once per frame
@@ -52,8 +57,11 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0)
+        if (health < 0)
+        {
+            healthBar.SetHealth(0);
             Die();
+        }else healthBar.SetHealth(health);
     }
 
     private void Die()
