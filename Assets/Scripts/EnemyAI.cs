@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,12 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
     [SerializeField] private int health;
+
+
+    private MoneyManager money;
+    private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
+    private bool isBalanceIncreased = false;    //Balanced increased?
+
     public delegate void OnDeath(GameObject gameObject);
     public OnDeath onDeath;
     public float agentSpeed = 3.5f;
@@ -16,7 +23,16 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get instance associated with MoneyManager gameObject
+        try {
+            this.money = GameObject.FindObjectOfType<MoneyManager>();
+        }
+        catch(Exception e) {
+            Debug.LogException(e);
+        } 
+
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
+
     }
 
     // Update is called once per frame
@@ -36,6 +52,12 @@ public class EnemyAI : MonoBehaviour
     {
         StopCoroutine("FreezeEffect");
         gameObject.SetActive(false);
+
+        //If game object is not active and if balance hasn't been increased already, then increase money balance
+        if (!gameObject.activeSelf && !this.isBalanceIncreased) {
+             this.isBalanceIncreased = true;
+             money.SetMoneyBalance(value);   //When enemy dies, increase money balance
+        }
         onDeath?.Invoke(gameObject);
     }
 
