@@ -81,6 +81,37 @@ public class EnemyAI : MonoBehaviour
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
     }
 
+    public void ApplyStunEffect(GameObject particalSystemObj, float stunTime)
+    {
+        EmitMinionDebuff(particalSystemObj); 
+
+        StartCoroutine("StunEffect", stunTime);
+    }
+
+    IEnumerator StunEffect(float stunTime)
+    {
+        float duration = stunTime;
+        float totalTime = 0;
+        while (totalTime <= duration)
+        {
+            if (this != null)
+                this.GetComponent<NavMeshAgent>().speed = 0f;
+            totalTime += Time.deltaTime;
+            var integer = (int)totalTime; /* choose how to quantize this */
+                                          /* convert integer to string and assign to text */
+            yield return null;
+        }
+        this.GetComponent<NavMeshAgent>().speed = agentSpeed;
+    }
+
+    public void EmitMinionDebuff(GameObject particalSystem)
+    {
+        var instantiatedObj = (GameObject)Instantiate(particalSystem, 
+                                                        transform.position + new Vector3(0,0.8f,0), 
+                                                        transform.rotation);
+        Destroy(instantiatedObj, 1f); //create particle effect and remove it.
+    }
+
     public bool IsAlive()
     {
         return health > 0;
