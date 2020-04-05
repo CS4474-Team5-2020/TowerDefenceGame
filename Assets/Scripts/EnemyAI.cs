@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
     private int health = 50;  //Might want to add this back to inspector
+    public string minionType;
 
     private MoneyManager money;
     private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
@@ -68,13 +69,28 @@ public class EnemyAI : MonoBehaviour
     {
         StopCoroutine("FreezeEffect");
         gameObject.SetActive(false);
-
+        //Debug.Log(minionType.ToString());
+        if(minionType == "Group")
+        {
+            SpawnGrouplings();
+        }
         //If game object is not active and if balance hasn't been increased already, then increase money balance
         if (!gameObject.activeSelf && !this.isBalanceIncreased) {
              this.isBalanceIncreased = true;
              money.SetMoneyBalance(value);   //When enemy dies, increase money balance
         }
         onDeath?.Invoke(gameObject);
+    }
+
+    //Spawn smaller Group minions when one dies
+    private void SpawnGrouplings()
+    {
+        InheritedBehaviour parentBehaviour = new InheritedBehaviour(this.transform.position + new Vector3(0.2f, 0, 0), this.GetComponent<NavMeshAgent>().destination, this.attackOrientation, this.endZone);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "",parentBehaviour);
+        parentBehaviour.SpawnPoint = this.transform.position + new Vector3(0.2f, 0.2f, 0);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "", parentBehaviour);
+        parentBehaviour.SpawnPoint = this.transform.position + new Vector3(0.2f, 0.2f, 0.2f);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "", parentBehaviour);
     }
 
     public void ApplyFreezeEffect() {
@@ -170,4 +186,20 @@ public class EnemyAI : MonoBehaviour
     private Vector3 GetDestination() {
         return this.GetComponent<NavMeshAgent>().destination;
     }
+}
+
+public class InheritedBehaviour
+{
+    public InheritedBehaviour(Vector3 spawn, Vector3 destination, string orientation, string end)
+    {
+        SpawnPoint = spawn;
+        Destination = destination;
+        Orientation = orientation;
+        EndZone = end;
+    }
+    public Vector3 SpawnPoint { get; set; }
+    public Vector3 Destination { get; set; }
+    public string Orientation { get; set; }
+    public string EndZone { get; set; }
+
 }

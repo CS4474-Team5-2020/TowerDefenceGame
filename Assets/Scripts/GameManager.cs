@@ -115,7 +115,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(2.5f);
     }
 
-    private void SpawnEnemy(string enemyType, string position)
+    public void SpawnEnemy(string enemyType, string position, InheritedBehaviour parentBehaviour = null)
     {
         GameObject enemyObject = Pool.GetObject(enemyType);
         string type = "Enemy";
@@ -155,11 +155,20 @@ public class GameManager : Singleton<GameManager>
                 endZone = "";
                 break;
         }
-
-        enemyObject.transform.position = spawnPos.transform.position;
-        enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
-        enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
-        enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
+        if(parentBehaviour != null)
+        {
+            enemyObject.transform.position = parentBehaviour.SpawnPoint;
+            enemyObject.GetComponent<EnemyAI>().SetDestination(parentBehaviour.Destination);
+            enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(parentBehaviour.Orientation);
+            enemyObject.GetComponent<EnemyAI>().SetEndZone(parentBehaviour.EndZone);
+        }
+        else
+        {
+            enemyObject.transform.position = spawnPos.transform.position;
+            enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
+            enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
+            enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
+        }
     }
     public void PickTower(TowerBtn towerbtn)
     {
