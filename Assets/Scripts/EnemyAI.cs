@@ -8,8 +8,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public GameObject finishZone;
-    [SerializeField] private int health;
-
+    private int health = 50;  //Might want to add this back to inspector
 
     private MoneyManager money;
     private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
@@ -19,6 +18,11 @@ public class EnemyAI : MonoBehaviour
     public OnDeath onDeath;
     public float agentSpeed = 3.5f;
     
+    private HealthManager playerHealth;
+    private bool isHealthDecreased = false;  //Health was already decreased? 
+
+    private string attackOrientation;
+    private string endZone;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,7 @@ public class EnemyAI : MonoBehaviour
         //Get instance associated with MoneyManager gameObject
         try {
             this.money = GameObject.FindObjectOfType<MoneyManager>();
+            this.playerHealth = GameObject.FindObjectOfType<HealthManager>();
         }
         catch(Exception e) {
             Debug.LogException(e);
@@ -38,13 +43,16 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //If enemy made it across to the finish zone, then decrease the player health
+        if (this.IsEnemyAcross()){
+            this.playerHealth.DecreasePlayerHealth(this.health, this.endZone);
+        }
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health < 0)
+        if (health <= 0)
             Die();
     }
 
@@ -116,8 +124,42 @@ public class EnemyAI : MonoBehaviour
     {
         return health > 0;
     }
-    public void SetDestination(Vector3 destination)
-    {
-        GetComponent<NavMeshAgent>().destination = destination;
+
+    //Check if enemy made it to the destination
+    private bool IsEnemyAcross() {
+        //If enemy comes within certain distance of finish zone, it got across
+        float closeness;
+
+        if (this.attackOrientation == "horizontal") {
+            closeness = this.transform.position.x - this.GetDestination().x;
+        }
+        else if (this.attackOrientation == "vertical") {
+             closeness = this.transform.position.z - this.GetDestination().z;
+        }
+        else {
+            closeness = -100f; 
+        }
+
+        if (this.IsAlive() && (closeness < 0.2f && closeness > -0.2f) && !this.isHealthDecreased) {
+            this.isHealthDecreased = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void SetAttackOrientation(string orientation) {
+        this.attackOrientation = orientation;
+    }
+
+    public void SetEndZone(string endZone) {
+        this.endZone = endZone;
+    }
+
+    public void SetDestination(Vector3 destination) {
+        this.GetComponent<NavMeshAgent>().destination = destination;
+    }
+
+    private Vector3 GetDestination() {
+        return this.GetComponent<NavMeshAgent>().destination;
     }
 }

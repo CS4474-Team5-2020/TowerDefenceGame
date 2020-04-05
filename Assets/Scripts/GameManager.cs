@@ -83,6 +83,8 @@ public class GameManager : Singleton<GameManager>
     private void SpawnEnemy(string enemyType, string position)
     {
         string type = "Enemy";
+        string orientation, endZone;
+
         GameObject enemyObject = Pool.GetObject(type);
         GameObject spawnPos;
         GameObject endPos;
@@ -91,27 +93,39 @@ public class GameManager : Singleton<GameManager>
             case "top":
                 spawnPos = TopStartZone;
                 endPos = TopEndZone;
+                orientation = "vertical";
+                endZone = "bottom";
                 break;
             case "bottom":
                 spawnPos = BottomStartZone;
                 endPos = BottomEndZone;
+                orientation = "vertical";
+                endZone = "top";
                 break;
             case "right":
                 spawnPos = RightStartZone;
                 endPos = RightEndZone;
+                orientation = "horizontal";
+                endZone = "left";
                 break;
             case "left":
                 spawnPos = LeftStartZone;
                 endPos = LeftEndZone;
+                orientation = "horizontal";
+                endZone = "right";
                 break;
             default:
                 spawnPos = null;
                 endPos = null;
+                orientation = "";
+                endZone = "";
                 break;
         }
 
         enemyObject.transform.position = spawnPos.transform.position;
         enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
+        enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
+        enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
     }
     public void PickTower(TowerBtn towerbtn)
     {
