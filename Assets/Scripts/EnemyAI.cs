@@ -18,6 +18,9 @@ public class EnemyAI : MonoBehaviour
     public delegate void OnDeath(GameObject gameObject);
     public OnDeath onDeath;
     public float agentSpeed = 3.5f;
+
+    //will move the slider on the healthbar
+    public HealthBar healthBar;
     
 
     // Start is called before the first frame update
@@ -33,6 +36,8 @@ public class EnemyAI : MonoBehaviour
 
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
 
+        healthBar.SetMaxHealth(health);
+
     }
 
     // Update is called once per frame
@@ -45,7 +50,10 @@ public class EnemyAI : MonoBehaviour
     {
         health -= damage;
         if (health < 0)
+        {
+            healthBar.SetHealth(0);
             Die();
+        }else healthBar.SetHealth(health);
     }
 
     private void Die()

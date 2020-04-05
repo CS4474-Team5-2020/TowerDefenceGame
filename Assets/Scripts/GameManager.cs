@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     //TODO: Update number next to "Next Wave" button with time remaining to indicate how much gold they will get for pressing it
 
     //Constant for the default next wave score bonus/remaining wave time
-    private const int Countdown = 50;
+    private const int Countdown = 2;
     //Remaining time left in wave
     public int WaveTime { get; set; }
     //Next Wave Text object to reference
