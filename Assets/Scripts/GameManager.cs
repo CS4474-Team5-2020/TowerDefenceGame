@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    public TowerBtn ClickedBtn { get; private set; }
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
     //TODO: Update number next to "Next Wave" button with time remaining to indicate how much gold they will get for pressing it
@@ -111,5 +112,13 @@ public class GameManager : Singleton<GameManager>
 
         enemyObject.transform.position = spawnPos.transform.position;
         enemyObject.GetComponent<EnemyAI>().SetDestination(endPos.transform.position);
+    }
+    public void PickTower(TowerBtn towerbtn)
+    {
+        this.ClickedBtn = towerbtn;
+    }
+    public void BuyTower()
+    {
+        this.ClickedBtn = null;
     }
 }
