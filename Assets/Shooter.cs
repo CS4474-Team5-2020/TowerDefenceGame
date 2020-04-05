@@ -22,8 +22,8 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         canAttack = true;
-        detector.onDetect += SetTarget;
-        detector.unDetect += UnsetTarget;
+        // detector.onDetect += SetTarget;
+        // detector.unDetect += UnsetTarget;
 
     }
 

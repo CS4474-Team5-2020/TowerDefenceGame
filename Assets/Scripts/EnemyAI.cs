@@ -109,7 +109,7 @@ public class EnemyAI : MonoBehaviour
             closeness = -100f; 
         }
 
-        if (this.IsAlive() && (closeness < 0.5f && closeness > -0.5f) && !this.isHealthDecreased) {
+        if (this.IsAlive() && (closeness < 0.2f && closeness > -0.2f) && !this.isHealthDecreased) {
             this.isHealthDecreased = true;
             return true;
         }
