@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    private int maxHealth = 90;
+    private int maxHealth = 200;
     private int playerHealth;
 
     public Text playerHealthText;  

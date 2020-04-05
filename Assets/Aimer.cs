@@ -9,6 +9,7 @@ public class Aimer : MonoBehaviour
     public GameObject rotatable;
     public Detection detector;
 
+    private Queue<Transform> enemies = new Queue<Transform>();
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,12 @@ public class Aimer : MonoBehaviour
     void Update()
     {
 
-        if (target == null)
-            return;
+        if (target == null && enemies.Count > 0){
+            target = enemies.Dequeue();
+        }else if(target != null && !target.GetComponent<EnemyAI>().IsAlive()){
+            if(enemies.Count > 0)
+                target = enemies.Dequeue();
+        }else if(target == null) return;
 
         Vector3 displacement = target.position - transform.position;
         rotatable.transform.rotation = Quaternion.LookRotation(new Vector3(displacement.x, 0, displacement.z));
@@ -32,14 +37,11 @@ public class Aimer : MonoBehaviour
 
     private void SetTarget(GameObject targetObject)
     {
-        target = targetObject.transform;
+        enemies.Enqueue(targetObject.transform);
     }
 
     private void UnsetTarget(GameObject targetObject)
     {
-        if (target.gameObject != targetObject)
-            return;
-
         target = null;
     }
 
