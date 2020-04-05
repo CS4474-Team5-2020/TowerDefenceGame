@@ -51,6 +51,8 @@ public class EnemyAI : MonoBehaviour
         //If enemy made it across to the finish zone, then decrease the player health
         if (this.IsEnemyAcross()){
             this.playerHealth.DecreasePlayerHealth(this.health, this.endZone);
+            gameObject.SetActive(false);
+            onDeath?.Invoke(gameObject);
         }
     }
 
