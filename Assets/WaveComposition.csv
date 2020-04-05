@@ -1,8 +1,8 @@
 ﻿1,Enemy,10,2,2,3,3
 2,Group Enemy,4,1,1,1,1
-3,Enemy,10,2,2,3,3
-4,Enemy,10,2,2,3,3
-5,Enemy,10,2,2,3,3
+3,Fast Enemy,4,1,1,1,1
+4,Immune Enemy,4,1,1,1,1
+5,Boss Enemy,1,0,1,0,0
 6,Enemy,10,2,2,3,3
 7,Enemy,10,2,2,3,3
 8,Enemy,10,2,2,3,3
