@@ -14,8 +14,7 @@ public class MoneyManager : MonoBehaviour
     public Text moneyBalanceText;
     public Text moneyValueText;
 
-    public Text moneyHighScoreLabel1;
-    public Text moneyHighScoreLabel2;
+    public Text moneyHighScoreLabel;
     public Text moneyHighScoreText;
     public Text moneyCollectedText;
 
@@ -68,7 +67,11 @@ public class MoneyManager : MonoBehaviour
         return this.moneyValue;
     }
 
-    public void SetMoneyBalance(int value) {
+    public int getHighScore() {
+        return this.moneyHighScore;
+    }
+
+    public void IncreaseMoneyBalance(int value) {
         //Set money balance and counter values
         this.moneyBalance += value;
         this.moneyValue = value;
@@ -90,8 +93,7 @@ public class MoneyManager : MonoBehaviour
             this.moneyHighScore = this.moneyCollected;
             //Set text and colour
             this.moneyHighScoreText.text = this.moneyHighScore.ToString();
-            moneyHighScoreLabel1.GetComponent<Text>().color = new Color(0.316f, 0.59f, 0.55f);
-            moneyHighScoreLabel2.GetComponent<Text>().color = new Color(0.316f, 0.59f, 0.55f);
+            moneyHighScoreLabel.GetComponent<Text>().color = new Color(0.316f, 0.59f, 0.55f);
             moneyHighScoreText.GetComponent<Text>().color = new Color(0.316f, 0.59f, 0.55f);
             //Save high score in prefs
             this.SaveNewHighScore();

@@ -72,7 +72,7 @@ public class EnemyAI : MonoBehaviour
         //If game object is not active and if balance hasn't been increased already, then increase money balance
         if (!gameObject.activeSelf && !this.isBalanceIncreased) {
              this.isBalanceIncreased = true;
-             money.SetMoneyBalance(value);   //When enemy dies, increase money balance
+             money.IncreaseMoneyBalance(value);   //When enemy dies, increase money balance
         }
         onDeath?.Invoke(gameObject);
     }
