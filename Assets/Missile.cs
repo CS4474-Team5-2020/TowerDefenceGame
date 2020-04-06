@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Missile : MonoBehaviour
+public class Missile : PausableBehaviour
 {
     //TODO: There is probably some better way to inherit or what not for this class.... rather then coppying bullet
     public GameObject body;
@@ -22,6 +22,13 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GamePause.IsPaused())
+            return;
+
+
+        if (!target == null)
+            gameObject.SetActive(false);
+
         //Mainly for the rocket but, this rotate the bullet as well...
         Vector3 displacement = target.transform.position - transform.position;
         target.transform.rotation = Quaternion.LookRotation(new Vector3(displacement.x, 0, displacement.z));
