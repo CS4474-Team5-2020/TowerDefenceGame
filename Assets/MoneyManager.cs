@@ -120,7 +120,11 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
-    public void DecreaseMoneyBalance(int value) {
-        this.moneyBalance -= value;
+    public void DecreaseMoneyBalance(int cost) {
+        this.moneyBalance -= cost;
+        this.moneyValue = cost;
+        this.moneyBalanceText.text = this.moneyBalance.ToString();
+        this.moneyValueText.text = this.moneyValue.ToString();
+        this.SaveMoneyBalance();
     }
 }
