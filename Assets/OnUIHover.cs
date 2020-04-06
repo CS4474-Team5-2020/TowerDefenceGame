@@ -5,13 +5,26 @@ using UnityEngine.UI;
 
 public class OnUIHover : MonoBehaviour
 {
-    public GameObject balance;
+    public GameObject balanceTooltip;
+    public GameObject highScoreTooltip;
 
-    public void MouseOver() {
-        balance.SetActive(true);
+    public void MouseOverBalance() {
+        balanceTooltip.SetActive(true);
     }
 
-    public void MouseOut() {
-        balance.SetActive(false);
+    public void MouseOutBalance() {
+        balanceTooltip.SetActive(false);
+    }
+
+    public void MouseOverHighScore() {
+        if (highScoreTooltip != null) {
+            highScoreTooltip.SetActive(true);
+        }
+    }
+
+    public void MouseOutHighScore() {
+        if (highScoreTooltip != null) {
+            highScoreTooltip.SetActive(false);
+        }
     }
 }

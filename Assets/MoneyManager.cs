@@ -22,13 +22,17 @@ public class MoneyManager : MonoBehaviour
 
     //Tooltips
     public GameObject tooltipBalance;
+    public GameObject tooltipHighScore;
 
     // Start is called before the first frame update
     void Start()
     {
         try {
-            //Set tooltip to inactive to start
+            //Set tooltips to inactive to start
             this.tooltipBalance.SetActive(false);
+            if (this.tooltipHighScore != null) {
+                this.tooltipHighScore.SetActive(false);
+            }
 
             //Load in the saved money balance just before the current game session begins
             this.moneyBalance = PlayerPrefs.GetInt("moneyBalance");

@@ -155,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 260, y: -40}
-  m_SizeDelta: {x: 175, y: 30}
+  m_AnchoredPosition: {x: 265, y: -40}
+  m_SizeDelta: {x: 175, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206878441
 MonoBehaviour:
@@ -751,6 +751,7 @@ MonoBehaviour:
   moneyHighScoreText: {fileID: 0}
   moneyCollectedText: {fileID: 0}
   tooltipBalance: {fileID: 206878439}
+  tooltipHighScore: {fileID: 0}
 --- !u!4 &835174636
 Transform:
   m_ObjectHideFlags: 0
@@ -833,7 +834,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Your total money balance.
+  m_Text: 'Your total money balance.
+
+    You can use this money to
+
+    purchase towers.'
 --- !u!222 &1189440930
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -986,7 +991,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec4ba7c516d9ce4fb4757157a4b71d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: {fileID: 206878439}
+  balanceTooltip: {fileID: 206878439}
+  highScoreTooltip: {fileID: 0}
 --- !u!4 &1449414927
 Transform:
   m_ObjectHideFlags: 0
@@ -1208,7 +1214,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1449414926}
-          m_MethodName: MouseOver
+          m_MethodName: MouseOverBalance
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1223,7 +1229,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1449414926}
-          m_MethodName: MouseOut
+          m_MethodName: MouseOutBalance
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
