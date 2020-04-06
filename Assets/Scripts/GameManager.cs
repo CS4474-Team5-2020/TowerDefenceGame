@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
     public int WaveTime { get; set; }
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
-
+    public GameObject WaveProgress;
     //References to Starting and End zones
     public GameObject TopStartZone;
     public GameObject BottomStartZone;
@@ -46,6 +46,7 @@ public class GameManager : Singleton<GameManager>
         StartWave();
         //Update remaining time every second
         InvokeRepeating("UpdateTime", 1f, 1f);
+        InvokeRepeating("MoveProgressBar", 0f, 0.03f);
     }
 
     // Update is called once per frame
@@ -65,6 +66,10 @@ public class GameManager : Singleton<GameManager>
         }
         //Update Next Wave button text
         NextButtonTxt.text = "Next Wave +" + WaveTime;
+    }
+    void MoveProgressBar()
+    {
+        WaveProgress.transform.position += new Vector3(-0.005f, 0, 0);
     }
     public void StartWave()
     {
