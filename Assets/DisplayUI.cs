@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +13,21 @@ public class DisplayUI : MonoBehaviour
     public float fadeTime;
     public Image fill;
     public GameObject gameObject;
+    public TowerBtn towerbtn;
+
+    private MoneyManager money;
+
     // Start is called before the first frame update
     void Start()
     {
+        try {
+            this.money = GameObject.FindObjectOfType<MoneyManager>();
+            // Debug.Log(this.money.GetMoneyBalance().ToString());
+        }
+        catch(Exception e){
+            Debug.Log("Error: " + e.ToString());
+        }
+
         myText = text.GetComponent<Text>();
         myText.color = Color.clear;
         fill.color = Color.clear;
@@ -27,13 +40,26 @@ public class DisplayUI : MonoBehaviour
         {
             myText.text = myString;
             myText.color = Color.black;
-            fill.color = Color.white;
+            fill.color = new Color(255f, 255f, 255f, 0.6f);
         }
         else
         {
             myText.color = Color.clear;
             fill.color = Color.clear;
         }
+
+        //If don't have enough money to purchase tower, grey out tower button
+        var tempColor = this.gameObject.GetComponent<Button>().colors;
+        if (this.money.GetMoneyBalance() < towerbtn.Price) {
+            tempColor.normalColor = Color.grey;
+            tempColor.pressedColor = Color.grey;
+            tempColor.highlightedColor = Color.grey;
+            tempColor.selectedColor = Color.grey;
+        }
+        else {
+            tempColor.normalColor = Color.white; 
+        }
+        this.gameObject.GetComponent<Button>().colors = tempColor;
 
     }
 

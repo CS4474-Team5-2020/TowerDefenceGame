@@ -61,7 +61,7 @@ public class GameManager : Singleton<GameManager>
         //Set up Next Wave button text
         WaveTime = Countdown;
         NextButtonTxt = GameObject.Find("NextWaveBtn").GetComponentInChildren<Button>().GetComponentInChildren<Text>();
-        NextButtonTxt.text = "Next Wave +" + WaveTime.ToString("F0");
+        NextButtonTxt.text = "Next Wave: " + WaveTime.ToString("F0");
         LoadWaveData();
         StartWave();
         //Update remaining time every second
@@ -85,7 +85,7 @@ public class GameManager : Singleton<GameManager>
             StartWave();
         }
         //Update Next Wave button text
-        NextButtonTxt.text = "Next Wave +" + WaveTime.ToString("F0");
+        NextButtonTxt.text = "Next Wave: " + WaveTime.ToString("F0");
     }
 
     //Incrementally move progress bar
@@ -140,7 +140,7 @@ public class GameManager : Singleton<GameManager>
     {
         //Reset Next Wave Text
         WaveTime = Countdown;
-        NextButtonTxt.text = "Next Wave +" + WaveTime;
+        NextButtonTxt.text = "Next Wave: " + WaveTime;
         //TODO: Increase gold based on how much time left in current wave
         string minionType = wave.MinionType;
 
