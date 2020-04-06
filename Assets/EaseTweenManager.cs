@@ -12,14 +12,11 @@ public class EaseTweenManager : MonoBehaviour
     public Text healthLostTxtTop;
     public Text healthLostTxtBottom;
 
-    private Vector3 originalPositionCoin, originalScaleCoin;
+    private Vector3 originalScaleCoin;
 
     // Start is called before the first frame update
     void Start()
-    {
-        //Set original position of coin
-        this.originalPositionCoin = this.coin.transform.position;
-        
+    {       
         //Get original scale of coin
         this.originalScaleCoin = coin.GetComponent<RectTransform>().localScale;
         LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0f);
@@ -57,12 +54,11 @@ public class EaseTweenManager : MonoBehaviour
         seq.append(LeanTween.scale(coin.GetComponent<RectTransform>(), coin.GetComponent<RectTransform>().localScale / 1.05f, 0.25f));
         seq.append(LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0f));
         
-        StartCoroutine(SetOriginalCoinPos());
+        StartCoroutine(SetOriginalCoinScale());
     }
 
-    IEnumerator SetOriginalCoinPos() {
+    IEnumerator SetOriginalCoinScale() {
         coin.GetComponent<RectTransform>().localScale = this.originalScaleCoin;
-        this.coin.transform.position = this.originalPositionCoin;
         yield return null;
     }
 }
