@@ -31,10 +31,10 @@ public class GridScript : MonoBehaviour
         transform.position = worldPos;
 
     }
-
+    //!EventSystem.current.IsPointerOverGameObject() &&
     private void OnMouseOver()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickedBtn != null)
+        if ( GameManager.Instance.ClickedBtn != null)
         {
            if (Input.GetMouseButtonDown(0))
             {
