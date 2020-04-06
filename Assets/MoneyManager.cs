@@ -71,6 +71,18 @@ public class MoneyManager : MonoBehaviour
         return this.moneyHighScore;
     }
 
+    public void DecreaseMoneyBalance(int cost)
+    {
+        this.moneyBalance -= cost;
+        this.moneyValue = cost;
+        this.moneyCollected -= cost;
+        this.tween.TweenCoin();
+        this.moneyBalanceText.text = this.moneyBalance.ToString();
+        this.moneyValueText.text = this.moneyValue.ToString();
+        this.moneyCollectedText.text = this.moneyCollected.ToString();
+        this.SaveMoneyBalance();
+    }
+
     public void IncreaseMoneyBalance(int value) {
         //Set money balance and counter values
         this.moneyBalance += value;
