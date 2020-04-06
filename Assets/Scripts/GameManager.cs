@@ -13,11 +13,12 @@ public class GameManager : Singleton<GameManager>
 
     //Constant for the default next wave starting score bonus/remaining wave time. 
     //Note: Prefer to keep at 15 seconds from now on
-    private const int Countdown = 15;
-    //Remaining time left in wave
-    public int WaveTime { get; set; }
+    private const int Countdown = 15;  
+
     //Remaining units until the next block of the wave progress bar
     private decimal RemainingUnits { get; set; } = 1.83m;
+    //Remaining time left in wave
+    public float WaveTime { get; set; }
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
     public GameObject WaveProgress;
@@ -31,12 +32,16 @@ public class GameManager : Singleton<GameManager>
     public GameObject LeftEndZone;
     public GameObject RightEndZone;
 
+    private bool paused;
     //Queue of current Waves
     private Queue<Wave> WaveData = new Queue<Wave>();
 
     private void Awake()
     {
+        paused = false;
         Pool = GetComponent<ObjectPool>();
+        GamePause.onPause += OnPause;
+        GamePause.onResume += OnResume;
     }
     // Use this for initialization
     void Start()
@@ -44,7 +49,7 @@ public class GameManager : Singleton<GameManager>
         //Set up Next Wave button text
         WaveTime = Countdown;
         NextButtonTxt = GameObject.Find("NextWaveBtn").GetComponentInChildren<Button>().GetComponentInChildren<Text>();
-        NextButtonTxt.text = "Next Wave +" + WaveTime;
+        NextButtonTxt.text = "Next Wave +" + WaveTime.ToString("F0");
         LoadWaveData();
         StartWave();
         //Update remaining time every second
@@ -55,12 +60,10 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        if (paused)
+            return;
 
-    }
-
-    void UpdateTime()
-    {
-        WaveTime--;
+        WaveTime -= Time.deltaTime;
         //Reset wave time and spawn next wave at the end of the wave time
         if( WaveTime < 0)
         {
@@ -69,12 +72,14 @@ public class GameManager : Singleton<GameManager>
             StartWave();
         }
         //Update Next Wave button text
-        NextButtonTxt.text = "Next Wave +" + WaveTime;
+        NextButtonTxt.text = "Next Wave +" + WaveTime.ToString("F0");
     }
 
     //Incrementally move progress bar
     void MoveProgressBar()
     {
+        if (paused)
+            return;
         RemainingUnits -= 0.0061m;
         WaveProgress.transform.position += new Vector3(-0.0061f, 0, 0);
     }
@@ -89,6 +94,8 @@ public class GameManager : Singleton<GameManager>
     //Start wave onclick event when pressing Next Wave button
     public void StartWaveNow()
     {
+        if (paused)
+            return;
         if (WaveData.Count > 0)
         {
             var currentWave = WaveData.Dequeue();
@@ -205,6 +212,7 @@ public class GameManager : Singleton<GameManager>
             enemyObject.GetComponent<EnemyAI>().SetAttackOrientation(orientation);
             enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
         }
+        enemyObject.GetComponent<EnemyAI>().onDeath += Pool.ReturnGameObject;
     }
     public void PickTower(TowerBtn towerbtn)
     {
@@ -215,6 +223,16 @@ public class GameManager : Singleton<GameManager>
     {
         this.ClickedBtn = null;
     }
+    protected void OnResume()
+    {
+        paused = false;
+    }
+
+    protected void OnPause()
+    {
+        paused = true;
+    }
+
     //CSV Format: Wave #,Minion Type, # of minions, top spawn count, bottom spawn count, left spawn count, right spawn count
     //Loads Wave Data into Queue
     private void LoadWaveData()
@@ -247,6 +265,4 @@ public class GameManager : Singleton<GameManager>
     public int BottomSpawnCount { get; set; }
     public int LeftSpawnCount { get; set; }
     public int RightSpawnCount { get; set; }
-
-
 }
