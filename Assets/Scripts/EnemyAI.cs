@@ -54,7 +54,7 @@ public class EnemyAI : PausableBehaviour
         if (this.IsEnemyAcross()){
             this.playerHealth.DecreasePlayerHealth(this.health, this.endZone);
             gameObject.SetActive(false);
-            onDeath?.Invoke(gameObject);
+            Destroy(gameObject);
         }
     }
 
