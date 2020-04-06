@@ -751,12 +751,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1870032223710081579, guid: aafa07da0aa6cdd4aade4b0516e3cd7c,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ba9966e72ffd66b4e94788bf7959bae3,
-        type: 3}
     - target: {fileID: 1676223553290693441, guid: aafa07da0aa6cdd4aade4b0516e3cd7c,
         type: 3}
       propertyPath: m_Name
@@ -832,6 +826,11 @@ PrefabInstance:
       propertyPath: shotDamage
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1676223553649968913, guid: aafa07da0aa6cdd4aade4b0516e3cd7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1676223553649968912, guid: aafa07da0aa6cdd4aade4b0516e3cd7c,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -841,11 +840,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.184
-      objectReference: {fileID: 0}
-    - target: {fileID: 1676223553649968913, guid: aafa07da0aa6cdd4aade4b0516e3cd7c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aafa07da0aa6cdd4aade4b0516e3cd7c, type: 3}
