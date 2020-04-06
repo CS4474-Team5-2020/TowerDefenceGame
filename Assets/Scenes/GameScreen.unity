@@ -148,8 +148,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 839067295}
+  m_Children: [{fileID: 839067295}]
   m_Father: {fileID: 1014140738}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -228,6 +227,11 @@ MonoBehaviour:
   initialPoolSize: 0
   objectPrefabs:
   - {fileID: 4663915732067841884, guid: 4a02e7e0dfc8da644a5be12d2b64b376, type: 3}
+  - {fileID: 9032465780884704291, guid: 3087b33c1f94e794ea7fb3b6338b0fcb, type: 3}
+  - {fileID: 4932919880639043982, guid: 219765045c2b82e4da92eca04925927e, type: 3}
+  - {fileID: 1120084781245921865, guid: 8d99c1a7308aea7488e13050f9b92d4b, type: 3}
+  - {fileID: 2981304898411789978, guid: 749250e2e9c539146b0aad490ab5d120, type: 3}
+  - {fileID: 7166567075578706882, guid: 7e99ad5f5f39baf438473ce85fdf6d0c, type: 3}
 --- !u!114 &122683103
 MonoBehaviour:
   m_ObjectHideFlags: 0
