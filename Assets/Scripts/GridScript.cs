@@ -34,14 +34,11 @@ public class GridScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-
-
         if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickedBtn != null)
         {
-            if (Input.GetMouseButtonDown(0))
+           if (Input.GetMouseButtonDown(0))
             {
                 PlaceTower();
-
             }
 
         }
@@ -52,7 +49,9 @@ public class GridScript : MonoBehaviour
 
         GameObject tower = (GameObject)Instantiate(GameManager.Instance.ClickedBtn.TowerPrefab, transform.position, Quaternion.identity);
 
-        tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Y;
+        tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Z;
+
+        Hover.Instance.Deactivate();
 
         GameManager.Instance.BuyTower();
 
