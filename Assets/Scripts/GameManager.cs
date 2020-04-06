@@ -31,6 +31,10 @@ public class GameManager : Singleton<GameManager>
     private bool paused;
     //Queue of current Waves
     private Queue<Wave> WaveData = new Queue<Wave>();
+    private float timePassed;
+
+    public GameObject victoryScreen;
+    public GameObject defeatScreen;
 
     private void Awake()
     {
@@ -38,6 +42,9 @@ public class GameManager : Singleton<GameManager>
         Pool = GetComponent<ObjectPool>();
         GamePause.onPause += OnPause;
         GamePause.onResume += OnResume;
+        timePassed = 0;
+        victoryScreen.SetActive(false);
+        defeatScreen.SetActive(false);
     }
     // Use this for initialization
     void Start()
@@ -56,6 +63,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (paused)
             return;
+        timePassed += Time.deltaTime;
 
         WaveTime -= Time.deltaTime;
         //Reset wave time and spawn next wave at the end of the wave time
@@ -74,7 +82,12 @@ public class GameManager : Singleton<GameManager>
             var currentWave = WaveData.Dequeue();
             StartCoroutine(SpawnWave(currentWave));
         }
-        
+        //Check if an enemy is left
+        else if (GameObject.FindGameObjectWithTag("Enemy") == null)
+        {
+            Victory();
+        }
+
     }
 
     private IEnumerator SpawnWave(Wave wave)
@@ -172,6 +185,7 @@ public class GameManager : Singleton<GameManager>
             enemyObject.GetComponent<EnemyAI>().SetEndZone(endZone);
         }
         enemyObject.GetComponent<EnemyAI>().onDeath += Pool.ReturnGameObject;
+        enemyObject.GetComponent<EnemyAI>().onDeath += SessionData.IncrementMinion;
     }
     public void PickTower(TowerBtn towerbtn)
     {
@@ -213,6 +227,25 @@ public class GameManager : Singleton<GameManager>
             WaveData.Enqueue(newWave);
         }
         
+    }
+
+    private void Victory ()
+    {
+        EndGame();
+        victoryScreen.SetActive(true);
+    }
+
+    public void Defeat()
+    {
+        EndGame();
+        defeatScreen.SetActive(true);
+    }
+    private void EndGame()
+    {
+        SessionData.SetRecordMinions();
+        SessionData.SetCurrentTime(timePassed);
+        paused = true;
+        enabled = false;
     }
 }
  class Wave
