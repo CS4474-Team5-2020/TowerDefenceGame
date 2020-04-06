@@ -198,11 +198,14 @@ public class EnemyAI : PausableBehaviour
     protected override void OnResume()
     {
         GetComponent<NavMeshAgent>().isStopped = false;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
     }
 
     protected override void OnPause()
     {
         GetComponent<NavMeshAgent>().isStopped = true;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
     }
 }
 
