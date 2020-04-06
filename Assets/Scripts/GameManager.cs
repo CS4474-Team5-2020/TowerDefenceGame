@@ -83,6 +83,9 @@ public class GameManager : Singleton<GameManager>
             WaveTime = Countdown;
             RemainingUnits = 1.83m;
             StartWave();
+        }else if(WaveTime < 1 && WaveData.Count < 1)
+        { 
+            Victory();
         }
         //Update Next Wave button text
         NextButtonTxt.text = "Next Wave: " + WaveTime.ToString("F0");
