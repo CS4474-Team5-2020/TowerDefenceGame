@@ -59,11 +59,10 @@ public class GameManager : Singleton<GameManager>
     {
         this.money = GameObject.FindObjectOfType<MoneyManager>();
         //Set up Next Wave button text
-        WaveTime = Countdown;
+        WaveTime = 5;
         NextButtonTxt = GameObject.Find("NextWaveBtn").GetComponentInChildren<Button>().GetComponentInChildren<Text>();
         NextButtonTxt.text = "Next Wave: " + WaveTime.ToString("F0");
         LoadWaveData();
-        StartWave();
         //Update remaining time every second
         InvokeRepeating("UpdateTime", 0f, 1f);
         InvokeRepeating("MoveProgressBar", 0f, 0.05f);
