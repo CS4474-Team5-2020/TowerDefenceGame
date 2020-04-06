@@ -12,13 +12,13 @@ public class EaseTweenManager : MonoBehaviour
     public Text healthLostTxtTop;
     public Text healthLostTxtBottom;
 
-    private Vector3 originalPositionCoin;
+    private Vector3 originalScaleCoin;
 
     // Start is called before the first frame update
     void Start()
-    {
-        //Set original position of coin
-        this.originalPositionCoin = this.coin.transform.position;
+    {       
+        //Get original scale of coin
+        this.originalScaleCoin = coin.GetComponent<RectTransform>().localScale;
         LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0f);
     }
 
@@ -48,10 +48,17 @@ public class EaseTweenManager : MonoBehaviour
     }
 
     public void TweenCoin() {
-        LeanTween.alpha(coin.GetComponent<RectTransform>(), 1f, 0f);
-        LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0.60f);
+        var seq = LeanTween.sequence();
+        seq.append(LeanTween.alpha(coin.GetComponent<RectTransform>(), 1f, 0f));
+        seq.append(LeanTween.scale(coin.GetComponent<RectTransform>(), coin.GetComponent<RectTransform>().localScale * 1.15f, 0.15f));
+        seq.append(LeanTween.scale(coin.GetComponent<RectTransform>(), coin.GetComponent<RectTransform>().localScale / 1.05f, 0.25f));
+        seq.append(LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0f));
+        
+        StartCoroutine(SetOriginalCoinScale());
+    }
 
-        LeanTween.moveX(coin.GetComponent<RectTransform>(), 100f, 0.60f);
-        this.coin.transform.position = this.originalPositionCoin;
+    IEnumerator SetOriginalCoinScale() {
+        coin.GetComponent<RectTransform>().localScale = this.originalScaleCoin;
+        yield return null;
     }
 }

@@ -54,7 +54,7 @@ public class EnemyAI : PausableBehaviour
         if (this.IsEnemyAcross()){
             this.playerHealth.DecreasePlayerHealth(this.health, this.endZone);
             gameObject.SetActive(false);
-            onDeath?.Invoke(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -101,30 +101,38 @@ public class EnemyAI : PausableBehaviour
     }
 
     public void ApplyFreezeEffect() {
-        StartCoroutine("FreezeEffect",0.5f);
+        if (minionType != "Immune")
+        {
+            StartCoroutine("FreezeEffect", 0.5f);
+        }
     }
 
     IEnumerator FreezeEffect(float freezeTime)
     {
-        float duration = freezeTime;
-        float totalTime = 0;
-        while (totalTime <= duration)
-        {
-            if(this != null)
-                this.GetComponent<NavMeshAgent>().speed = 1f;
-            totalTime += Time.deltaTime;
-            var integer = (int)totalTime; /* choose how to quantize this */
-                                          /* convert integer to string and assign to text */
-            yield return null;
-        }
-        this.GetComponent<NavMeshAgent>().speed = agentSpeed;
+        
+            float duration = freezeTime;
+            float totalTime = 0;
+            while (totalTime <= duration)
+            {
+                if (this != null)
+                    this.GetComponent<NavMeshAgent>().speed = 1f;
+                totalTime += Time.deltaTime;
+                var integer = (int)totalTime; /* choose how to quantize this */
+                /* convert integer to string and assign to text */
+                yield return null;
+            }
+            this.GetComponent<NavMeshAgent>().speed = agentSpeed;
+        
     }
 
     public void ApplyStunEffect(GameObject particalSystemObj, float stunTime)
     {
-        EmitMinionDebuff(particalSystemObj); 
+        if(minionType != "Immune")
+        {
+            EmitMinionDebuff(particalSystemObj);
 
-        StartCoroutine("StunEffect", stunTime);
+            StartCoroutine("StunEffect", stunTime);
+        }
     }
 
     IEnumerator StunEffect(float stunTime)
