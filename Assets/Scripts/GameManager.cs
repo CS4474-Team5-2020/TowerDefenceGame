@@ -13,8 +13,8 @@ public class GameManager : Singleton<GameManager>
 
     //Constant for the default next wave starting score bonus/remaining wave time. 
     //Note: Prefer to keep at 15 seconds from now on
-    private const int Countdown = 15;  
-
+    private const int Countdown = 15;
+    public int DifficultyMultipler;
     //Remaining units until the next block of the wave progress bar
     private decimal RemainingUnits { get; set; } = 1.83m;
     //Remaining time left in wave
@@ -52,6 +52,7 @@ public class GameManager : Singleton<GameManager>
         timePassed = 0;
         victoryScreen.SetActive(false);
         defeatScreen.SetActive(false);
+        DifficultyMultipler = SessionData.difficultyMultiplier;
     }
     // Use this for initialization
     void Start()
