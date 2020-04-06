@@ -11,12 +11,13 @@ public class GameManager : Singleton<GameManager>
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
 
-    //Constant for the default next wave starting score bonus/remaining wave time
+    //Constant for the default next wave starting score bonus/remaining wave time. 
+    //Note: Prefer to keep at 15 seconds from now on
     private const int Countdown = 15;
     //Remaining time left in wave
     public int WaveTime { get; set; }
-    private decimal RemainingTime { get; set; } = 15m;
-    private decimal RemainingUnits { get; set; } = 3m;
+    //Remaining units until the next block of the wave progress bar
+    private decimal RemainingUnits { get; set; } = 1.83m;
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
     public GameObject WaveProgress;
@@ -64,24 +65,28 @@ public class GameManager : Singleton<GameManager>
         if( WaveTime < 0)
         {
             WaveTime = Countdown;
-            RemainingTime = 15m;
-            RemainingUnits = 3m;
+            RemainingUnits = 1.83m;
             StartWave();
         }
         //Update Next Wave button text
         NextButtonTxt.text = "Next Wave +" + WaveTime;
     }
+
+    //Incrementally move progress bar
     void MoveProgressBar()
     {
-        RemainingTime -= 0.05m;
-        RemainingUnits -= 0.01m;
-        WaveProgress.transform.position += new Vector3(-0.01f, 0, 0);
+        RemainingUnits -= 0.0061m;
+        WaveProgress.transform.position += new Vector3(-0.0061f, 0, 0);
     }
+
+    //Shift wave progress bar all the way to next block
     void ShiftProgressBar()
     {
         WaveProgress.transform.position -= new Vector3((float)RemainingUnits, 0, 0);
-        RemainingUnits = 3m;
+        RemainingUnits = 1.83m;
     }
+
+    //Start wave onclick event when pressing Next Wave button
     public void StartWaveNow()
     {
         if (WaveData.Count > 0)
@@ -94,6 +99,8 @@ public class GameManager : Singleton<GameManager>
             StartCoroutine(SpawnWave(currentWave));
         }
     }
+
+    //Start wave event when the countdown for each wave ends or at start of game
     private void StartWave()
     {
         if(WaveData.Count > 0)
@@ -202,6 +209,7 @@ public class GameManager : Singleton<GameManager>
     public void PickTower(TowerBtn towerbtn)
     {
         this.ClickedBtn = towerbtn;
+        Hover.Instance.Activate(towerbtn.Sprite);
     }
     public void BuyTower()
     {
