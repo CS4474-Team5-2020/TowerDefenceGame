@@ -8,11 +8,13 @@ public class MoneyManager : MonoBehaviour
 {
     private int moneyBalance = 0;
     private int moneyValue = 0;  //Amount of money gained per kill
+    private int moneyValueUsed = 0;  //Amount of money used in purchase of tower
     private int moneyHighScore = 0; 
     private int moneyCollected = 0;
 
     public Text moneyBalanceText;
     public Text moneyValueText;
+    public Text moneyValueUsedText;
 
     public Text moneyHighScoreLabel;
     public Text moneyHighScoreText;
@@ -122,9 +124,16 @@ public class MoneyManager : MonoBehaviour
 
     public void DecreaseMoneyBalance(int cost) {
         this.moneyBalance -= cost;
-        this.moneyValue = cost;
+        this.moneyValueUsed = cost;
+
+        //Apply tween on purchase
+        this.tween.TweenUsedCoin();
+
+        //Set values to UI text
         this.moneyBalanceText.text = this.moneyBalance.ToString();
-        this.moneyValueText.text = this.moneyValue.ToString();
+        this.moneyValueUsedText.text = "-" + this.moneyValueUsed.ToString();
+
+        //Save updated balance in player prefs
         this.SaveMoneyBalance();
     }
 }
