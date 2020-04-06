@@ -75,7 +75,7 @@ public class Shooter : PausableBehaviour
     {
         //Todo is there some fancy OO way of making this cleaner?
         GameObject projectile = bulletPool.GetGameObject();
-        Debug.Log(bulletPool.name);
+        //Debug.Log(bulletPool.name);
         if (bulletPool.name == "BulletPool") {
             projectile.GetComponent<Bullet>().Initialize(transform.position, target.GetComponent<EnemyAI>(), shotDamage, shotSpeed);
         } else if (bulletPool.name == "MissilePool") {

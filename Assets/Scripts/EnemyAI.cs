@@ -8,7 +8,8 @@ using UnityEngine.AI;
 public class EnemyAI : PausableBehaviour
 {
     public GameObject finishZone;
-    private int health = 50;  //Might want to add this back to inspector
+    public int health = 50;  //Might want to add this back to inspector
+    public string minionType;
 
     private MoneyManager money;
     private int value = 2;   //Equivalent to how much money player gets when killing this enemy - could we make this depend on different enemy types?
@@ -23,7 +24,7 @@ public class EnemyAI : PausableBehaviour
     
     private HealthManager playerHealth;
     private bool isHealthDecreased = false;  //Health was already decreased? 
-
+    private Vector3 destination;
     private string attackOrientation;
     private string endZone;
 
@@ -60,7 +61,8 @@ public class EnemyAI : PausableBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health < 0)
+        if(health < 0) { health = 0; }
+        if (health == 0)
         {
             healthBar.SetHealth(0);
             Die();
@@ -69,15 +71,33 @@ public class EnemyAI : PausableBehaviour
 
     private void Die()
     {
+        if (minionType == "Group" && gameObject.activeSelf)
+        {
+            StartCoroutine(SpawnGrouplings());
+        }
+
         StopCoroutine("FreezeEffect");
         gameObject.SetActive(false);
 
         //If game object is not active and if balance hasn't been increased already, then increase money balance
         if (!gameObject.activeSelf && !this.isBalanceIncreased) {
              this.isBalanceIncreased = true;
-             money.SetMoneyBalance(value);   //When enemy dies, increase money balance
+             money.IncreaseMoneyBalance(value);   //When enemy dies, increase money balance
         }
         onDeath?.Invoke(gameObject);
+    }
+
+    //Spawn 3 smaller Group minions when one dies
+    private IEnumerator SpawnGrouplings()
+    {
+        InheritedBehaviour parentBehaviour = new InheritedBehaviour(this.transform.position + new Vector3(0.4f, 0, 0), this.destination, this.attackOrientation, this.endZone);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "",parentBehaviour);
+        parentBehaviour.SpawnPoint = this.transform.position + new Vector3(0.4f, 0.4f, 0);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "", parentBehaviour);
+        parentBehaviour.SpawnPoint = this.transform.position + new Vector3(0.4f, 0.4f, 0.4f);
+        GameManager.Instance.SpawnEnemy("Groupling Enemy", "", parentBehaviour);
+        yield return null;
+
     }
 
     public void ApplyFreezeEffect() {
@@ -168,6 +188,7 @@ public class EnemyAI : PausableBehaviour
 
     public void SetDestination(Vector3 destination) {
         this.GetComponent<NavMeshAgent>().destination = destination;
+        this.destination = destination;
     }
 
     private Vector3 GetDestination() {
@@ -183,4 +204,20 @@ public class EnemyAI : PausableBehaviour
     {
         GetComponent<NavMeshAgent>().isStopped = true;
     }
+}
+
+public class InheritedBehaviour
+{
+    public InheritedBehaviour(Vector3 spawn, Vector3 destination, string orientation, string end)
+    {
+        SpawnPoint = spawn;
+        Destination = destination;
+        Orientation = orientation;
+        EndZone = end;
+    }
+    public Vector3 SpawnPoint { get; set; }
+    public Vector3 Destination { get; set; }
+    public string Orientation { get; set; }
+    public string EndZone { get; set; }
+
 }
