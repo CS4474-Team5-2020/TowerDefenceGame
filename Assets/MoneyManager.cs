@@ -36,8 +36,8 @@ public class MoneyManager : MonoBehaviour
                 this.tooltipHighScore.SetActive(false);
             }
 
-            //If the player is just starting out with no money accumulated, then provide $20 to start off
-            if (this.moneyBalance < 30) {
+            //If the player is just starting out with no money accumulated, then provide $30 to start off
+            if (PlayerPrefs.GetInt("moneyBalance") < 30) {
                 PlayerPrefs.SetInt("moneyBalance", 30);
                 PlayerPrefs.Save();
             }
