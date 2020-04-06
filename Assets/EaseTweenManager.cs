@@ -49,9 +49,9 @@ public class EaseTweenManager : MonoBehaviour
 
     public void TweenCoin() {
         LeanTween.alpha(coin.GetComponent<RectTransform>(), 1f, 0f);
-        LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0.75f);
+        LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0.60f);
 
-        LeanTween.moveX(coin.GetComponent<RectTransform>(), 100f, 0.75f);
+        LeanTween.moveX(coin.GetComponent<RectTransform>(), 100f, 0.60f);
         this.coin.transform.position = this.originalPositionCoin;
     }
 }
