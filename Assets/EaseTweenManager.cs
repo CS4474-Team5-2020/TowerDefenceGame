@@ -7,19 +7,25 @@ using UnityEngine.UI;
 public class EaseTweenManager : MonoBehaviour
 {
     public GameObject coin;
+    public GameObject coinUsed;
+
     public Text healthLostTxtLeft;
     public Text healthLostTxtRight;
     public Text healthLostTxtTop;
     public Text healthLostTxtBottom;
 
-    private Vector3 originalScaleCoin;
+    private Vector3 originalScaleCoin, originalUsedCoinPos;
 
     // Start is called before the first frame update
     void Start()
     {       
-        //Get original scale of coin
+        //Set original scale of coin
         this.originalScaleCoin = coin.GetComponent<RectTransform>().localScale;
         LeanTween.alpha(coin.GetComponent<RectTransform>(), 0f, 0f);
+
+        //Set original position of used red coin
+        this.originalUsedCoinPos = this.coinUsed.transform.position;
+        LeanTween.alpha(coinUsed.GetComponent<RectTransform>(), 0f, 0f);
     }
 
     // Update is called once per frame
@@ -61,4 +67,19 @@ public class EaseTweenManager : MonoBehaviour
         coin.GetComponent<RectTransform>().localScale = this.originalScaleCoin;
         yield return null;
     }
+
+    public void TweenUsedCoin() {
+        var seq = LeanTween.sequence();
+        seq.append(LeanTween.alpha(coinUsed.GetComponent<RectTransform>(), 1f, 0f));
+        LeanTween.moveX(coinUsed.GetComponent<RectTransform>(), 225f, 0.75f);
+        LeanTween.alpha(coinUsed.GetComponent<RectTransform>(), 0f, 0.75f);
+
+        StartCoroutine(SetOriginalUsedCoinPos());
+    }
+
+    IEnumerator SetOriginalUsedCoinPos() {
+        this.coinUsed.transform.position = this.originalUsedCoinPos;
+        yield return null;
+    }
+
 }

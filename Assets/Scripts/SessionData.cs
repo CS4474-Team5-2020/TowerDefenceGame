@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class SessionData
 {
-
+    public static int difficultyMultiplier { get; set; } = 1;
     public static int minionsKilled;
     public static int recordMinions { get; private set; }
 
