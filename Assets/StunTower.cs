@@ -36,7 +36,7 @@ public class StunTower : PausableBehaviour
         if (targetObjects.Count > 0)
             return;
 
-        StartCoroutine(FreezeEnemies(targetObjects));
+        StopCoroutine(FreezeEnemies(targetObjects));
     }
 
     IEnumerator FreezeEnemies(List<GameObject> targetObjects)
