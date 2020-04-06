@@ -51,6 +51,8 @@ public class GridScript : MonoBehaviour
 
         tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Z;
 
+        Hover.Instance.Deactivate();
+
         GameManager.Instance.BuyTower();
 
 
