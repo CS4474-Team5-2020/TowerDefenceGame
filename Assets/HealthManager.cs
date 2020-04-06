@@ -58,19 +58,19 @@ public class HealthManager : MonoBehaviour
 
         if (zone != "") {
             if (zone == "top") {
-                this.healthLostTextTop.text = "-" + this.playerHealthLost.ToString();
+                this.healthLostTextTop.text = "-" + this.playerHealthLost.ToString() + " lives";
                 this.tween.TweenHealthLost(zone);
             }
-            if (zone == "bottom" ){
-                this.healthLostTextBottom.text = "-" + this.playerHealthLost.ToString();
+            if (zone == "bottom"){
+                this.healthLostTextBottom.text = "-" + this.playerHealthLost.ToString() + " lives";
                 this.tween.TweenHealthLost(zone);
             }
-            if (zone == "left" ){
-                this.healthLostTextLeft.text = "-" + this.playerHealthLost.ToString();
+            if (zone == "left"){
+                this.healthLostTextLeft.text = "-" + this.playerHealthLost.ToString() + " lives";
                 this.tween.TweenHealthLost(zone);
             } 
-            if (zone == "right" ){
-                this.healthLostTextRight.text = "-" + this.playerHealthLost.ToString();
+            if (zone == "right"){
+                this.healthLostTextRight.text = "-" + this.playerHealthLost.ToString() + " lives";
                 this.tween.TweenHealthLost(zone);
             }
         }
