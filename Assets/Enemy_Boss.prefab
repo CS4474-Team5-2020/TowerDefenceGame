@@ -403,7 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finishZone: {fileID: 0}
   health: 50
-  agentSpeed: 3.5
+  minionType: 
+  agentSpeed: 3
   healthBar: {fileID: 7203872223489083934}
 --- !u!54 &1577842628544005738
 Rigidbody:
