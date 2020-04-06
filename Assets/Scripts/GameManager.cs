@@ -12,9 +12,11 @@ public class GameManager : Singleton<GameManager>
     //Keeps track of the current time in the wave
 
     //Constant for the default next wave starting score bonus/remaining wave time
-    private const int Countdown = 10;
+    private const int Countdown = 15;
     //Remaining time left in wave
     public int WaveTime { get; set; }
+    private decimal RemainingTime { get; set; } = 15m;
+    private decimal RemainingUnits { get; set; } = 3m;
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
     public GameObject WaveProgress;
@@ -45,8 +47,8 @@ public class GameManager : Singleton<GameManager>
         LoadWaveData();
         StartWave();
         //Update remaining time every second
-        InvokeRepeating("UpdateTime", 1f, 1f);
-        InvokeRepeating("MoveProgressBar", 0f, 0.03f);
+        InvokeRepeating("UpdateTime", 0f, 1f);
+        InvokeRepeating("MoveProgressBar", 0f, 0.05f);
     }
 
     // Update is called once per frame
@@ -62,6 +64,8 @@ public class GameManager : Singleton<GameManager>
         if( WaveTime < 0)
         {
             WaveTime = Countdown;
+            RemainingTime = 15m;
+            RemainingUnits = 3m;
             StartWave();
         }
         //Update Next Wave button text
@@ -69,9 +73,28 @@ public class GameManager : Singleton<GameManager>
     }
     void MoveProgressBar()
     {
-        WaveProgress.transform.position += new Vector3(-0.005f, 0, 0);
+        RemainingTime -= 0.05m;
+        RemainingUnits -= 0.01m;
+        WaveProgress.transform.position += new Vector3(-0.01f, 0, 0);
     }
-    public void StartWave()
+    void ShiftProgressBar()
+    {
+        WaveProgress.transform.position -= new Vector3((float)RemainingUnits, 0, 0);
+        RemainingUnits = 3m;
+    }
+    public void StartWaveNow()
+    {
+        if (WaveData.Count > 0)
+        {
+            var currentWave = WaveData.Dequeue();
+            if (currentWave.WaveNumber > 1)
+            {
+                ShiftProgressBar();
+            }
+            StartCoroutine(SpawnWave(currentWave));
+        }
+    }
+    private void StartWave()
     {
         if(WaveData.Count > 0)
         {
@@ -117,7 +140,7 @@ public class GameManager : Singleton<GameManager>
                 wave.TotalMinionCount--;
             }
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return null;//new WaitForSeconds(2.5f);
     }
 
     public void SpawnEnemy(string enemyType, string position, InheritedBehaviour parentBehaviour = null)
