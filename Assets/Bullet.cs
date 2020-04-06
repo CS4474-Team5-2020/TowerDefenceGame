@@ -21,6 +21,9 @@ public class Bullet : PausableBehaviour
         if (GamePause.IsPaused())
             return;
 
+        if (!target == null)
+            gameObject.SetActive(false);
+
         Vector3 distanceRemaining = target.transform.position - transform.position;
         float distanceTraveled = speed * Time.deltaTime;
         if (distanceRemaining.magnitude > distanceTraveled)

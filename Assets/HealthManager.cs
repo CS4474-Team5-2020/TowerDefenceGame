@@ -53,8 +53,16 @@ public class HealthManager : MonoBehaviour
     //Decrease player health by current enemy health - maybe want this to decrease by enemy value instead? 
     //Was thinking it would be more fair to decrease by enemy health so that it would better reflect a player's effort to kill an enemy
     public void DecreasePlayerHealth(int enemyHealth, string zone){
-        this.playerHealth -= enemyHealth;
-        this.playerHealthLost = enemyHealth;
+        playerHealth -= enemyHealth;
+        playerHealthLost = enemyHealth;
+
+        if (playerHealth < 0)
+        {
+            playerHealth = 0;
+            GameManager.Instance.Defeat();
+        }
+
+
 
         if (zone != "") {
             if (zone == "top") {
