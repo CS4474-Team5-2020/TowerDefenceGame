@@ -43,8 +43,9 @@ public class EnemyAI : PausableBehaviour
 
         this.GetComponent<NavMeshAgent>().speed = agentSpeed;
         //Multiply health by difficulty multiplier
-        this.health *= GameManager.Instance.DifficultyMultipler;
-        healthBar.SetMaxHealth(health*GameManager.Instance.DifficultyMultipler);
+        int adjustedHealth = Convert.ToInt32(this.health * GameManager.Instance.DifficultyMultipler);
+        this.health = adjustedHealth;
+        healthBar.SetMaxHealth(adjustedHealth);
 
     }
 

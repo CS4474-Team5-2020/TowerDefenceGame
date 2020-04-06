@@ -95,12 +95,12 @@ PrefabInstance:
     - target: {fileID: 4663915732067841958, guid: 4a02e7e0dfc8da644a5be12d2b64b376,
         type: 3}
       propertyPath: health
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4663915732067841958, guid: 4a02e7e0dfc8da644a5be12d2b64b376,
         type: 3}
       propertyPath: agentSpeed
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a02e7e0dfc8da644a5be12d2b64b376, type: 3}

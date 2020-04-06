@@ -28,7 +28,7 @@ public class DifficultySetting : MonoBehaviour
             hardButton.color = Color.white;
             medMinions.SetActive(false);
             hardMinions.SetActive(false);
-            SessionData.difficultyMultiplier = 1;
+            SessionData.difficultyMultiplier = 0.5f;
         }
         else if (level == 2)
         {
@@ -37,7 +37,7 @@ public class DifficultySetting : MonoBehaviour
             hardButton.color = Color.white;
             medMinions.SetActive(true);
             hardMinions.SetActive(false);
-            SessionData.difficultyMultiplier = 2;
+            SessionData.difficultyMultiplier = 1;
         }
         else if (level == 3)
         {
@@ -46,7 +46,7 @@ public class DifficultySetting : MonoBehaviour
             hardButton.color = hardColor;
             medMinions.SetActive(true);
             hardMinions.SetActive(true);
-            SessionData.difficultyMultiplier = 3;
+            SessionData.difficultyMultiplier = 1.5f;
         }
     }
 
