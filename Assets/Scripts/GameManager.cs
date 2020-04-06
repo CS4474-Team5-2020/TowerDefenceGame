@@ -21,6 +21,9 @@ public class GameManager : Singleton<GameManager>
     public float WaveTime { get; set; }
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
+
+    private MoneyManager money;
+
     public GameObject WaveProgress;
     //References to Starting and End zones
     public GameObject TopStartZone;
@@ -46,6 +49,7 @@ public class GameManager : Singleton<GameManager>
     // Use this for initialization
     void Start()
     {
+        this.money = GameObject.FindObjectOfType<MoneyManager>();
         //Set up Next Wave button text
         WaveTime = Countdown;
         NextButtonTxt = GameObject.Find("NextWaveBtn").GetComponentInChildren<Button>().GetComponentInChildren<Text>();
@@ -216,11 +220,16 @@ public class GameManager : Singleton<GameManager>
     }
     public void PickTower(TowerBtn towerbtn)
     {
-        this.ClickedBtn = towerbtn;
-        Hover.Instance.Activate(towerbtn.Sprite);
+        if (money.GetMoneyBalance() >= towerbtn.Price)
+        {
+            this.ClickedBtn = towerbtn;
+            Hover.Instance.Activate(towerbtn.Sprite);
+            
+        }
     }
     public void BuyTower()
     {
+        money.DecreaseMoneyBalance(ClickedBtn.Price);
         this.ClickedBtn = null;
     }
     protected void OnResume()
