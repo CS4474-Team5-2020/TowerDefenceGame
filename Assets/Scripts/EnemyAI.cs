@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : PausableBehaviour
 {
     public GameObject finishZone;
     private int health = 50;  //Might want to add this back to inspector
@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
 
     private string attackOrientation;
     private string endZone;
+
 
     // Start is called before the first frame update
     void Start()
@@ -171,5 +172,15 @@ public class EnemyAI : MonoBehaviour
 
     private Vector3 GetDestination() {
         return this.GetComponent<NavMeshAgent>().destination;
+    }
+
+    protected override void OnResume()
+    {
+        GetComponent<NavMeshAgent>().isStopped = false;
+    }
+
+    protected override void OnPause()
+    {
+        GetComponent<NavMeshAgent>().isStopped = true;
     }
 }

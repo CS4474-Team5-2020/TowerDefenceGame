@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : PausableBehaviour
 {
 
     private EnemyAI target;
@@ -18,6 +18,9 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GamePause.IsPaused())
+            return;
+
         Vector3 distanceRemaining = target.transform.position - transform.position;
         float distanceTraveled = speed * Time.deltaTime;
         if (distanceRemaining.magnitude > distanceTraveled)
@@ -50,6 +53,5 @@ public class Bullet : MonoBehaviour
         this.damage = damage;
         this.speed = speed;
     }
-    
 
 }
