@@ -1,20 +1,20 @@
 ﻿1,Enemy,10,5,5,0,0
-2,Group Enemy,15,4,4,4,3
-3,Immune Enemy,15,2,5,2,6
-4,Fast Enemy,8,2,2,2,2
-5,Boss Enemy,1,0,1,0,0
-6,Enemy,10,2,2,3,3
-7,Group Enemy,10,2,2,3,3
-8,Immune Enemy,10,2,2,3,3
-9,Fast Enemy,10,2,2,3,3
-10,Boss,2,1,0,0,1
-11,Enemy,10,2,2,3,3
-12,Group Enemy,10,2,2,3,3
-13,Immune Enemy,10,2,2,3,3
-14,Fast Enemy,10,2,2,3,3
-15,Boss,3,1,1,0,1
-16,Enemy,10,2,2,3,3
-17,Group Enemy,10,2,2,3,3
-18,Immune Enemy,10,2,2,3,3
-19,Fast Enemy,10,2,2,3,3
-20,Boss Enemy,4,1,1,1,1
+2,Enemy,15,6,6,0,3
+3,Group Enemy,10,5,5,0,0
+4,Immune Enemy,14,5,5,2,2
+5,Fast Enemy,14,8,2,2,2
+6,Boss Enemy,1,0,1,0,0
+7,Enemy,20,5,5,5,5
+8,Group Enemy,15,5,5,0,5
+9,Immune Enemy,16,4,4,4,4
+10,Fast Enemy,16,0,0,8,8
+11,Boss Enemy,2,1,0,1,0
+12,Enemy,24,2,10,10,2
+13,Group Enemy,20,5,5,5,5
+14,Immune Enemy,15,0,15,0,0
+15,Fast Enemy,20,10,0,10,0
+16,Boss Enemy,3,1,0,1,1
+17,Group Enemy,24,6,6,6,6
+18,Immune Enemy,20,10,0,0,10
+19,Boss Enemy,4,1,1,1,1
+20,Boss Enemy,5,2,1,1,1
