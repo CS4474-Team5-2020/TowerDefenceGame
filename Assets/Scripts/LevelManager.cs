@@ -32,22 +32,23 @@ public class LevelManager : MonoBehaviour
     {
         Tiles = new Dictionary<Point, GridScript>();
 
-        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
-        for (int y = 0; y < 16; y++)
+        Vector3 worldStart = new Vector3((float)-6.5, (float)0.5, (float)5.21);
+        for (int z = 0; z < 10; z++)
         {
-            for (int x = 0; x < 15; x++)
+            for (int x = 0; x < 10; x++)
             {
-                PlaceTile(x, y, worldStart);
+                PlaceTile(x,(float)0.5, z, worldStart);
             }
         }
     }
 
-    private void PlaceTile(int x, int y, Vector3 worldStart)
+    private void PlaceTile(int x, float y, int z, Vector3 worldStart)
     {
         GridScript newTile = Instantiate(tile).GetComponent<GridScript>();
-        newTile.setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
+        newTile.setup(new Point(x, y, z), new Vector3(worldStart.x + (TileSize * x), (float)0.5, worldStart.z - (TileSize * z)));
 
-        Tiles.Add(new Point(x, y), newTile);
+        Tiles.Add(new Point(x, y, z), newTile);
+        
 
     }
 }
