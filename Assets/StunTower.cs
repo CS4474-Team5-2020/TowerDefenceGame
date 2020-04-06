@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StunTower : MonoBehaviour
+public class StunTower : PausableBehaviour
 {
     public DetectionMulti detector;
     public GameObject towerParticles;
@@ -41,7 +41,6 @@ public class StunTower : MonoBehaviour
 
     IEnumerator FreezeEnemies(List<GameObject> targetObjects)
     {
-        Debug.Log("Stunning " + targetObjects.Count + " Enemies.");
         while (targetObjects.Count > 0)
         {
             //Freeze Animation
@@ -56,8 +55,16 @@ public class StunTower : MonoBehaviour
                     }
                 enemy.TakeDamage(damage);   
             }
-            
-            yield return new WaitForSeconds(timePerShot);
+
+            float deltaTime = 0;
+            while (deltaTime < timePerShot)
+            {
+                while(paused)
+                    yield return null;
+
+                deltaTime += Time.deltaTime;
+                yield return null;
+            }
         }
 
     }
