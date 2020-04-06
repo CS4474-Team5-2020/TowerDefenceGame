@@ -11,13 +11,17 @@ public class GameManager : Singleton<GameManager>
     public ObjectPool Pool { get; set; }
     //Keeps track of the current time in the wave
 
-    //Constant for the default next wave starting score bonus/remaining wave time
-    private const int Countdown = 10;
+    //Constant for the default next wave starting score bonus/remaining wave time. 
+    //Note: Prefer to keep at 15 seconds from now on
+    private const int Countdown = 15;  
+
+    //Remaining units until the next block of the wave progress bar
+    private decimal RemainingUnits { get; set; } = 1.83m;
     //Remaining time left in wave
     public float WaveTime { get; set; }
     //Next Wave Text object to reference
     private Text NextButtonTxt { get; set; }
-
+    public GameObject WaveProgress;
     //References to Starting and End zones
     public GameObject TopStartZone;
     public GameObject BottomStartZone;
@@ -49,6 +53,8 @@ public class GameManager : Singleton<GameManager>
         LoadWaveData();
         StartWave();
         //Update remaining time every second
+        InvokeRepeating("UpdateTime", 0f, 1f);
+        InvokeRepeating("MoveProgressBar", 0f, 0.05f);
     }
 
     // Update is called once per frame
@@ -62,12 +68,47 @@ public class GameManager : Singleton<GameManager>
         if( WaveTime < 0)
         {
             WaveTime = Countdown;
+            RemainingUnits = 1.83m;
             StartWave();
         }
         //Update Next Wave button text
         NextButtonTxt.text = "Next Wave +" + WaveTime.ToString("F0");
     }
-    public void StartWave()
+
+    //Incrementally move progress bar
+    void MoveProgressBar()
+    {
+        if (paused)
+            return;
+        RemainingUnits -= 0.0061m;
+        WaveProgress.transform.position += new Vector3(-0.0061f, 0, 0);
+    }
+
+    //Shift wave progress bar all the way to next block
+    void ShiftProgressBar()
+    {
+        WaveProgress.transform.position -= new Vector3((float)RemainingUnits, 0, 0);
+        RemainingUnits = 1.83m;
+    }
+
+    //Start wave onclick event when pressing Next Wave button
+    public void StartWaveNow()
+    {
+        if (paused)
+            return;
+        if (WaveData.Count > 0)
+        {
+            var currentWave = WaveData.Dequeue();
+            if (currentWave.WaveNumber > 1)
+            {
+                ShiftProgressBar();
+            }
+            StartCoroutine(SpawnWave(currentWave));
+        }
+    }
+
+    //Start wave event when the countdown for each wave ends or at start of game
+    private void StartWave()
     {
         if(WaveData.Count > 0)
         {
@@ -113,7 +154,7 @@ public class GameManager : Singleton<GameManager>
                 wave.TotalMinionCount--;
             }
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return null;//new WaitForSeconds(2.5f);
     }
 
     public void SpawnEnemy(string enemyType, string position, InheritedBehaviour parentBehaviour = null)

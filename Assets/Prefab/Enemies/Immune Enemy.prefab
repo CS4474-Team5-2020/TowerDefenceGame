@@ -72,5 +72,15 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a61c23ac632141045bf92b42c2b16806, type: 2}
+    - target: {fileID: 4663915732067841958, guid: 4a02e7e0dfc8da644a5be12d2b64b376,
+        type: 3}
+      propertyPath: minionType
+      value: Immune
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663915732067841958, guid: 4a02e7e0dfc8da644a5be12d2b64b376,
+        type: 3}
+      propertyPath: health
+      value: 75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a02e7e0dfc8da644a5be12d2b64b376, type: 3}
