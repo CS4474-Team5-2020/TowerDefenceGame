@@ -3024,6 +3024,7 @@ MonoBehaviour:
   fadeTime: 10
   fill: {fileID: 1864143226}
   gameObject: {fileID: 727329979}
+  towerbtn: {fileID: 727329981}
 --- !u!65 &727329986
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5987,8 +5988,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 1, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.53333336}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -6072,6 +6073,7 @@ MonoBehaviour:
   fadeTime: 0
   fill: {fileID: 2073178587}
   gameObject: {fileID: 1288417884}
+  towerbtn: {fileID: 1288417886}
 --- !u!1 &1317621394
 GameObject:
   m_ObjectHideFlags: 0
@@ -6606,6 +6608,7 @@ MonoBehaviour:
   fadeTime: 0
   fill: {fileID: 593688481}
   gameObject: {fileID: 1334845160}
+  towerbtn: {fileID: 1334845162}
 --- !u!1 &1341638081
 GameObject:
   m_ObjectHideFlags: 0
@@ -8264,6 +8267,7 @@ MonoBehaviour:
   fadeTime: 0
   fill: {fileID: 292220854}
   gameObject: {fileID: 1614196152}
+  towerbtn: {fileID: 1614196154}
 --- !u!1 &1617682363
 GameObject:
   m_ObjectHideFlags: 0
@@ -10382,6 +10386,7 @@ MonoBehaviour:
   fadeTime: 0
   fill: {fileID: 1317621396}
   gameObject: {fileID: 2121896256}
+  towerbtn: {fileID: 2121896258}
 --- !u!1 &2135899356
 GameObject:
   m_ObjectHideFlags: 0
