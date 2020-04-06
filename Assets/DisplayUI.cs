@@ -27,7 +27,7 @@ public class DisplayUI : MonoBehaviour
         {
             myText.text = myString;
             myText.color = Color.black;
-            fill.color = Color.white;
+            fill.color = new Color(255f, 255f, 255f, 0.6f);
         }
         else
         {
@@ -35,11 +35,6 @@ public class DisplayUI : MonoBehaviour
             fill.color = Color.clear;
         }
 
-    }
-
-    private bool IsMouseOverUI()
-    {
-        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private bool IsMouseOverUIWithIgnores()
