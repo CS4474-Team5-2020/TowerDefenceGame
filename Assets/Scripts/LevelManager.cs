@@ -32,10 +32,10 @@ public class LevelManager : MonoBehaviour
     {
         Tiles = new Dictionary<Point, GridScript>();
 
-        Vector3 worldStart = new Vector3((float)-6.5, (float)0.5, (float)5.21);
-        for (int z = 0; z < 10; z++)
+        Vector3 worldStart = new Vector3((float)-5.76, (float)0.5, (float)5.75);
+        for (int z = 0; z < 9; z++)
         {
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 9; x++)
             {
                 PlaceTile(x,(float)0.5, z, worldStart);
             }

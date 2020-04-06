@@ -119,4 +119,8 @@ public class MoneyManager : MonoBehaviour
             this.SaveNewHighScore();
         }
     }
+
+    public void DecreaseMoneyBalance(int value) {
+        this.moneyBalance -= value;
+    }
 }

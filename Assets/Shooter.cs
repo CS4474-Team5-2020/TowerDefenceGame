@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooter : MonoBehaviour
+public class Shooter : PausableBehaviour
 {
 
     private Transform target;
@@ -35,6 +35,9 @@ public class Shooter : MonoBehaviour
 
     private void Attack()
     {
+        if (paused)
+            return;
+
         if(!canAttack)
         {
             attackTimer += Time.deltaTime;
@@ -80,4 +83,5 @@ public class Shooter : MonoBehaviour
         }
 
     }
+
 }
