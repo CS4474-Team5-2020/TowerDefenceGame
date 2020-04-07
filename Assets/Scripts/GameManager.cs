@@ -65,7 +65,7 @@ public class GameManager : Singleton<GameManager>
         LoadWaveData();
         //Update remaining time every second
         InvokeRepeating("UpdateTime", 0f, 1f);
-        InvokeRepeating("MoveProgressBar", 0f, 0.05f);
+        InvokeRepeating("MoveProgressBar", 5f, 0.05f);
     }
 
     // Update is called once per frame
