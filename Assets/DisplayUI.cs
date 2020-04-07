@@ -58,9 +58,11 @@ public class DisplayUI : MonoBehaviour
         }
         else {
             tempColor.normalColor = Color.white; 
+            tempColor.pressedColor = new Color(0.78f, 0.78f, 0.78f, 1f);
+            tempColor.highlightedColor = new Color(0.88f, 0.88f, 0.88f, 1f);
+            tempColor.selectedColor = Color.white;
         }
         this.gameObject.GetComponent<Button>().colors = tempColor;
-
     }
 
     private bool IsMouseOverUI()
